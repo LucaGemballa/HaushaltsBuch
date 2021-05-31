@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/HaushaltsBuch.iml" filepath="$PROJECT_DIR$/.idea/HaushaltsBuch.iml" />
+      <module fileurl="file://$PROJECT_DIR$/BuchPackage/buchPackage.iml" filepath="$PROJECT_DIR$/BuchPackage/buchPackage.iml" />
+    </modules>
+  </component>
+</project>
