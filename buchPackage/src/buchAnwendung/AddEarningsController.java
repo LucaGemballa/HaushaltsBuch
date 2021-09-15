@@ -10,4 +10,13 @@ import java.net.URL;
 
 public class AddEarningsController {
 
+    @FXML
+    private Button btnConfirmAction;
+
+
+    @FXML
+    public void confirmAction(){
+
+    }
+
 }

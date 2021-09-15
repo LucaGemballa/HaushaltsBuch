@@ -6,4 +6,6 @@ public abstract class moneyAction {
     //private String priority;
     public String transactionCathegory;
     public String transactionDescription;
+
+
 }

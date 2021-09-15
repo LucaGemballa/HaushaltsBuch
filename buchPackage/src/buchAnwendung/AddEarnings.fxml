@@ -62,6 +62,6 @@
             <Text layoutX="14.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kommentar : " />
          </children>
       </AnchorPane>
-      <Button layoutX="379.0" layoutY="491.0" mnemonicParsing="false" prefHeight="109.0" prefWidth="278.0" text="Eingabe bestätigen" />
+      <Button fx:id="btnConfirmAction" layoutX="379.0" layoutY="491.0" mnemonicParsing="false" prefHeight="109.0" prefWidth="278.0" text="Eingabe bestätigen" />
    </children>
 </AnchorPane>

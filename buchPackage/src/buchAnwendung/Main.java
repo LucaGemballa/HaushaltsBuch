@@ -10,7 +10,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.Screen;
-
+import java.util.LinkedList;
+import reportedActions.moneyAction;
+import reportedActions.addingAction;
+import reportedActions.spendingAction;
 
 public class Main extends Application{
 
@@ -38,7 +41,11 @@ public class Main extends Application{
 
     public static void main (String args[]){
         //System.out.println("hello mfer");
+        LinkedList<moneyAction> transferList = new LinkedList<>();
+        System.out.println("hallo");
 
         launch(args);
+
+
     }
 }
