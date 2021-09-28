@@ -8,6 +8,9 @@ import javafx.fxml.FXMLLoader;
 //import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import reportedActions.moneyAction;
+
+import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.awt.event.ActionEvent;
@@ -23,6 +26,8 @@ import java.io.FileInputStream;*/
 import java.io.IOException;
 
 public class Controller {
+
+    public static LinkedList<moneyAction> transferList = new LinkedList<>();
 
     @FXML
     private Button btnEarnedThis;

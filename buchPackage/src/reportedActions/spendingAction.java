@@ -5,13 +5,13 @@ import java.io.FileReader;
 import java.util.LinkedList;
 
 public class spendingAction extends moneyAction{
-    public spendingAction (long sum, String cathegory, String description){
+    public spendingAction (float sum, String cathegory, String description){
         transactionSum = sum;
         transactionCathegory = cathegory;
         transactionDescription = description;
     }
 
-    public void registerAction (long sum,String cathegory, String description, LinkedList<moneyAction> list){
+    public void registerAction (float sum,String cathegory, String description, LinkedList<moneyAction> list){
 
         list.add(new spendingAction(sum,cathegory,description));
 
