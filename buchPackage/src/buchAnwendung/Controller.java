@@ -27,7 +27,7 @@ import java.io.IOException;
 
 public class Controller {
 
-    public static LinkedList<moneyAction> transferList = new LinkedList<>();
+    //public static LinkedList<moneyAction> transferList = new LinkedList<>();
 
     @FXML
     private Button btnEarnedThis;
@@ -50,6 +50,7 @@ public class Controller {
              * if "fx:controller" is not set in fxml
              * fxmlLoader.setController(NewWindowController);
              */
+
             Scene scene = new Scene(fxmlLoader.load(), 630, 400);
             Stage stage = new Stage();
             stage.setTitle("Einnahme hinzufügen");
