@@ -9,22 +9,21 @@ import javafx.scene.control.Label;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.net.URL;
 
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
-import java.util.List;
-import java.util.ArrayList;
 import javafx.collections.ObservableList;
 import javafx.collections.ListChangeListener;
 import javafx.collections.FXCollections;
 
 import reportedActions.moneyAction;
 import reportedActions.*;
-import java.util.LinkedList;
+
 import java.nio.file.*;
+import java.util.List;
 
 public class AddEarningsController {
 
@@ -33,6 +32,7 @@ public class AddEarningsController {
     private String cath1= "Unterhalt";
     private String cath2= "Taschengeld";
     private String cath3= "Dividende";
+
 
     @FXML
     public ChoiceBox<String> boxCathegory;
@@ -58,7 +58,7 @@ public class AddEarningsController {
     @FXML
     public void confirmAction(){
         try{
-            LinkedList<moneyAction> list1 = new LinkedList<moneyAction>();
+            //LinkedList<moneyAction> list1 = new LinkedList<moneyAction>();
 
             //zugefügte Summe auslesen
             Float transSum = Float.parseFloat(fldSum.getText());
@@ -102,9 +102,18 @@ public class AddEarningsController {
         System.out.println(cathHasShown);
         if(cathHasShown == false){
             System.out.println("1");
+            ListIterator<String> catIterator = Main.cathegoryList.listIterator(0);
+            while (catIterator.hasNext()){
+                String Test = catIterator.next();
+                boxCathegory.getItems().add(Test);
+            }
+
+            /*
             boxCathegory.getItems().add(cath1);
             boxCathegory.getItems().add(cath2);
             boxCathegory.getItems().add(cath3);
+
+             */
             cathHasShown= true;
         }
         System.out.println("2");

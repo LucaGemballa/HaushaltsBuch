@@ -32,7 +32,7 @@
                         <Button fx:id="btnSpending" mnemonicParsing="false" prefHeight="66.0" prefWidth="234.0" text="Ausgabe hinzufügen" GridPane.rowIndex="1" />
                         <Button mnemonicParsing="false" prefHeight="66.0" prefWidth="234.0" text="Spartopf einrichten" GridPane.rowIndex="2" />
                         <Button mnemonicParsing="false" prefHeight="66.0" prefWidth="234.0" text="automatische Transaktion einrichten" GridPane.rowIndex="3" />
-                        <Button mnemonicParsing="false" prefHeight="66.0" prefWidth="235.0" text="Kathegorien verwalten" GridPane.rowIndex="4" />
+                        <Button fx:id="editCathegories" mnemonicParsing="false" onMouseClicked="#AddCathegoriesWindow" prefHeight="66.0" prefWidth="235.0" text="Kathegorien verwalten" GridPane.rowIndex="4" />
                      </children>
                   </GridPane>
                </children>

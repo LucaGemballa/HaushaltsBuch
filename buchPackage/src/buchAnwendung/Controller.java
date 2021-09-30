@@ -36,6 +36,9 @@ public class Controller {
     private Button btnSpending;
 
     @FXML
+    private Button editCathegories;
+
+    @FXML
     void display(){
         System.out.println("666");
     }
@@ -54,6 +57,27 @@ public class Controller {
             Scene scene = new Scene(fxmlLoader.load(), 630, 400);
             Stage stage = new Stage();
             stage.setTitle("Einnahme hinzufügen");
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            Logger logger = Logger.getLogger(getClass().getName());
+            logger.log(Level.SEVERE, "Failed to create new Window.", e);
+        }
+
+    }
+
+    @FXML
+    public void AddCathegoriesWindow(){
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("EditCathegories.fxml"));
+            /*
+             * if "fx:controller" is not set in fxml
+             * fxmlLoader.setController(NewWindowController);
+             */
+            Scene scene = new Scene(fxmlLoader.load(), 630, 400);
+            Stage stage = new Stage();
+            stage.setTitle("Kathegoriemanager");
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {

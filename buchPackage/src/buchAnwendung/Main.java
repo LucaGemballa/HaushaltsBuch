@@ -25,7 +25,9 @@ import java.util.Scanner;
 public class Main extends Application{
 
     public static String printToData ="";
+    public static String printToDataCats ="";
     public static LinkedList<moneyAction> transferList = new LinkedList<>();
+    public static LinkedList<String> cathegoryList = new LinkedList<>();
     public static int transactionCount = 0;
 
     @Override
@@ -67,6 +69,42 @@ public class Main extends Application{
             }
 
             transactionCount++;
+        }
+
+        //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+        // Einlesen alter Kathegorien
+        //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        Scanner scanCathegories = null;
+        try{
+            scanCathegories = new Scanner(new File("C:\\Users\\Luca\\Desktop\\HaushaltsbuchDaten\\kathegorienListe.txt"));
+
+        }
+        catch (Exception e){
+        }
+
+        if(scanCathegories.hasNext()){
+            String[] newStr2 = scanCathegories.nextLine().split("\\s+");
+            for (int i = 0; i < newStr2.length; i++) {
+                System.out.println(newStr2[i]);
+                printToDataCats = printToDataCats + newStr2[i];
+
+            }
+            //printToData = scan.nextLine().split("\\s+");
+        }
+
+        while (scanCathegories.hasNext()){
+            //Text an Leerzeichen splitten
+            String[] newStr2 = scanCathegories.nextLine().split("\\s+");
+            for (int i = 0; i < newStr2.length; i++) {
+                System.out.println(newStr2[i]);
+                cathegoryList.add(newStr2[i]);
+                printToDataCats = printToDataCats + "\n" + newStr2[i];
+
+            }
+
+
         }
 
         //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
