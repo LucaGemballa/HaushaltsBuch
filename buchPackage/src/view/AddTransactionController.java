@@ -1,31 +1,19 @@
-package buchAnwendung;
+package view;
 
 import java.lang.*;
+
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
 
-import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.util.*;
-import java.net.URL;
 
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
-import javafx.collections.ObservableList;
-import javafx.collections.ListChangeListener;
-import javafx.collections.FXCollections;
-
-import reportedActions.moneyAction;
-import reportedActions.*;
-
 import java.nio.file.*;
-import java.util.List;
 
-public class AddEarningsController {
+public class AddTransactionController {
 
     //vorläufige Auswahl an Kathegorien:
     public boolean cathHasShown = false;
@@ -46,7 +34,7 @@ public class AddEarningsController {
     @FXML
     private TextField fldSum;
 
-    public AddEarningsController(){
+    public AddTransactionController(){
         System.out.println("44");
 
         //boxCathegory.getItems().add(cath1);
@@ -66,6 +54,8 @@ public class AddEarningsController {
 
             // Kathegorie der Transaktion auslesen
 
+            String transCathegory = boxCathegory.getValue();
+
 
             //Beschreibung auslesen
 
@@ -76,14 +66,16 @@ public class AddEarningsController {
 
 
             System.out.println("Eingabeprozess");
-            reportedActions.addingAction.registerAction(transSum,"","",Main.transferList);
-            Main.printToData = Main.printToData + "\n" +  reportedActions.addingAction.actionToText(Main.transactionCount++,Main.transferList);
+            view.Main.rootService.transactionService.registerTransaction(transSum,transCathegory,"");
+            //view.Main.printToData = view.Main.printToData + "\n" +  reportedActions.addingAction.actionToText(view.Main.transactionCount++, view.Main.transferList);
+
+            view.Main.printToData = view.Main.printToData + "\n" +  Main.rootService.transactionList.list.get(Main.transactionCount++).toText();
             //transactionCount++;
-            System.out.println(Main.printToData);
+            System.out.println(view.Main.printToData);
 
             Path p = Path.of("C:\\Users\\Luca\\Desktop\\HaushaltsbuchDaten\\transaktionsListe.txt");
             try{
-                Path filePath = Files.writeString(p,Main.printToData);
+                Path filePath = Files.writeString(p, view.Main.printToData);
 
             }
             catch (Exception e){
@@ -121,3 +113,4 @@ public class AddEarningsController {
     }
 
 }
+

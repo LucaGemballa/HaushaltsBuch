@@ -1,21 +1,16 @@
-package buchAnwendung;
+package view;
 
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
+import javafx.scene.chart.StackedBarChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.fxml.FXMLLoader;
 //import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import reportedActions.moneyAction;
 
-import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.awt.event.ActionEvent;
-import java.util.ResourceBundle;
-import java.net.URL;
 //imports for IOException
 /*import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -25,7 +20,15 @@ import java.io.File;
 import java.io.FileInputStream;*/
 import java.io.IOException;
 
-public class Controller {
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.StackedBarChart;
+import javafx.scene.chart.XYChart;
+import javafx.collections.FXCollections;
+import java.util.Arrays;
+
+
+public class MainScreenController {
 
     //public static LinkedList<moneyAction> transferList = new LinkedList<>();
 
@@ -38,23 +41,35 @@ public class Controller {
     @FXML
     private Button editCathegories;
 
+    final static String bier ="Bier";
+    final CategoryAxis xAxis = new CategoryAxis();
+    final NumberAxis yAxis = new NumberAxis();
+
+
+    @FXML
+    private StackedBarChart<String,Number> earningChart =
+            new StackedBarChart<String,Number>(xAxis,yAxis);
+
+    static XYChart.Series<String,Number> series1 =
+            new XYChart.Series<String,Number>();
+    public Boolean notInitialised = true;
+
     @FXML
     void display(){
         System.out.println("666");
     }
 
     @FXML
-    public void AddEarningsWindow (){
-
+    public void AddTransactionWindow (){
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(getClass().getResource("AddEarnings.fxml"));
+            fxmlLoader.setLocation(getClass().getResource("addTransaction.fxml"));
             /*
              * if "fx:controller" is not set in fxml
              * fxmlLoader.setController(NewWindowController);
              */
 
-            Scene scene = new Scene(fxmlLoader.load(), 630, 400);
+            Scene scene = new Scene(fxmlLoader.load(), 700, 720);
             Stage stage = new Stage();
             stage.setTitle("Einnahme hinzufügen");
             stage.setScene(scene);
@@ -70,7 +85,7 @@ public class Controller {
     public void AddCathegoriesWindow(){
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(getClass().getResource("EditCathegories.fxml"));
+            fxmlLoader.setLocation(getClass().getResource("editCategories.fxml"));
             /*
              * if "fx:controller" is not set in fxml
              * fxmlLoader.setController(NewWindowController);
@@ -87,6 +102,22 @@ public class Controller {
 
     }
 
+    @FXML
+    public  void initializeCharts(){
+        if(notInitialised){
+            xAxis.setLabel("Country");
+            xAxis.setCategories(FXCollections.<String>observableArrayList(Arrays.asList(bier)));
+            yAxis.setLabel("Value");
+            earningChart.setTitle("haha");
+
+            series1.setName("Bierkosten");
+            series1.getData().add(new XYChart.Data<String, Number>(bier,200));
+
+            earningChart.getData().addAll(series1);
+            notInitialised = false;
+        }
+    }
+
 
     //general method for opening new window
     @FXML
@@ -94,7 +125,7 @@ public class Controller {
 
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(getClass().getResource("AddEarnings.fxml"));
+            fxmlLoader.setLocation(getClass().getResource("addTransaction.fxml"));
             /*
              * if "fx:controller" is not set in fxml
              * fxmlLoader.setController(NewWindowController);
@@ -112,6 +143,6 @@ public class Controller {
     }
     //@Override
     //public void initialize(URL url, ResourceBundle rb){
-        //nope
+    //nope
     //}
 }

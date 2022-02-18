@@ -1,32 +1,30 @@
-package buchAnwendung;
+package view;
 
-
+import entity.Transaction;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 //import java.awt.geom.Rectangle2D;
 import javafx.geometry.Rectangle2D;
-import java.lang.Object;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.Screen;
 import java.util.LinkedList;
-import reportedActions.moneyAction;
-import reportedActions.addingAction;
-import reportedActions.spendingAction;
 
-import java.nio.file.*;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.Scanner;
+
+import service.*;
 
 public class Main extends Application{
 
     public static String printToData ="";
     public static String printToDataCats ="";
-    public static LinkedList<moneyAction> transferList = new LinkedList<>();
+
+
+    public static RootService rootService = new RootService();
+
+
     public static LinkedList<String> cathegoryList = new LinkedList<>();
     public static int transactionCount = 0;
 
@@ -59,14 +57,8 @@ public class Main extends Application{
             for (int i = 0; i < newStr.length; i++) {
                 System.out.println(newStr[i]);
                 printToData = printToData + "\n" + newStr[i];
-
             }
-            if (Float.parseFloat(newStr[0]) >= 0){
-                transferList.add(new addingAction(Float.parseFloat(newStr[0]),"",""));
-            }
-            else{
-                transferList.add(new spendingAction(Float.parseFloat(newStr[0]),"",""));
-            }
+            rootService.transactionList.add(new Transaction(Float.parseFloat(newStr[0]),"",""));
 
             transactionCount++;
         }
@@ -88,6 +80,7 @@ public class Main extends Application{
             String[] newStr2 = scanCathegories.nextLine().split("\\s+");
             for (int i = 0; i < newStr2.length; i++) {
                 System.out.println(newStr2[i]);
+                cathegoryList.add(newStr2[i]);
                 printToDataCats = printToDataCats + newStr2[i];
 
             }
@@ -103,15 +96,12 @@ public class Main extends Application{
                 printToDataCats = printToDataCats + "\n" + newStr2[i];
 
             }
-
-
         }
-
         //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 
-        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("mainScreen.fxml"));
         primaryStage.setTitle("Haushaltsbuch Assistent");
         primaryStage.setScene(new Scene(root, 1920, 1080));
 
@@ -128,12 +118,11 @@ public class Main extends Application{
 
         primaryStage.show();
 
-
     }
 
     public static void main (String args[]){
         //System.out.println("hello mfer");
-        LinkedList<moneyAction> transferList = new LinkedList<>();
+        //LinkedList<moneyAction> transferList = new LinkedList<>();
         System.out.println("hallo");
 
         launch(args);
