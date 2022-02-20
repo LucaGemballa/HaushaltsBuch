@@ -44,7 +44,7 @@
             <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <StackedBarChart fx:id="earningChart" layoutX="218.0" layoutY="169.0" prefHeight="364.0" prefWidth="597.0">
+                  <StackedBarChart fx:id="earningChart" animated="false" layoutX="218.0" layoutY="169.0" prefHeight="364.0" prefWidth="597.0" title="Einnahmen">
                     <xAxis>
                       <CategoryAxis side="BOTTOM" />
                     </xAxis>

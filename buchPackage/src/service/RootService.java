@@ -8,6 +8,7 @@ public class RootService {
      */
     public TransactionService transactionService;
     public FileService fileService;
+    public CategoryService categoryService;
 
 
     /*
@@ -20,6 +21,7 @@ public class RootService {
     public RootService(){
         transactionService = new TransactionService(this);
         fileService = new FileService(this);
+        categoryService = new CategoryService(this);
 
         transactionList = new TransactionList();
     }

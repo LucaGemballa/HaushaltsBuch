@@ -1,5 +1,6 @@
 package view;
 
+import entity.CategorySeries;
 import javafx.fxml.FXML;
 import javafx.scene.chart.StackedBarChart;
 import javafx.scene.chart.XYChart;
@@ -41,10 +42,11 @@ public class MainScreenController {
     @FXML
     private Button editCathegories;
 
-    final static String bier ="Bier";
+
     final CategoryAxis xAxis = new CategoryAxis();
     final NumberAxis yAxis = new NumberAxis();
 
+    public static CategorySeries categorySeries = new CategorySeries();
 
     @FXML
     private StackedBarChart<String,Number> earningChart =
@@ -105,15 +107,23 @@ public class MainScreenController {
     @FXML
     public  void initializeCharts(){
         if(notInitialised){
-            xAxis.setLabel("Country");
-            xAxis.setCategories(FXCollections.<String>observableArrayList(Arrays.asList(bier)));
-            yAxis.setLabel("Value");
-            earningChart.setTitle("haha");
+            /*
+            set up categories and months for the charts
+             */
+            xAxis.setLabel("Monat");
+            String[] categories = Main.rootService.categoryService.generateCategoryArray();
+            Main.rootService.categoryService.initCategorySeries(categorySeries);
 
-            series1.setName("Bierkosten");
-            series1.getData().add(new XYChart.Data<String, Number>(bier,200));
+            xAxis.setCategories(FXCollections.<String>observableArrayList(Arrays.asList(categories)));
 
-            earningChart.getData().addAll(series1);
+            yAxis.setLabel("€");
+            earningChart.setTitle("Einnahmen");
+
+            /*
+            for each month add each transaction to its series
+             */
+
+            earningChart.getData().addAll(categorySeries.seriesList);
             notInitialised = false;
         }
     }

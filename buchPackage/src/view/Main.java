@@ -1,5 +1,6 @@
 package view;
 
+import entity.CategorySeries;
 import entity.Transaction;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -9,6 +10,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.Screen;
+
+import java.time.LocalDate;
 import java.util.LinkedList;
 
 import java.io.File;
@@ -23,9 +26,10 @@ public class Main extends Application{
 
 
     public static RootService rootService = new RootService();
+    //public static CategorySeries categorySeries = new CategorySeries();
 
 
-    public static LinkedList<String> cathegoryList = new LinkedList<>();
+    public static LinkedList<String> cathegoryList = new LinkedList<String>();
     public static int transactionCount = 0;
 
     @Override
@@ -45,10 +49,15 @@ public class Main extends Application{
             String[] newStr = scan.nextLine().split("\\s+");
             for (int i = 0; i < newStr.length; i++) {
                 System.out.println(newStr[i]);
-                printToData = printToData + newStr[i];
-
+                printToData = printToData + newStr[i] + " ";
             }
+            printToData = printToData + "\n";
             //printToData = scan.nextLine().split("\\s+");
+            if(newStr.length > 1) {
+                rootService.transactionList.add(new Transaction(Float.parseFloat(newStr[0]), newStr[1], LocalDate.parse(newStr[2]),""));
+            }
+
+            transactionCount++;
         }
 
         while (scan.hasNext()){
@@ -56,9 +65,16 @@ public class Main extends Application{
             String[] newStr = scan.nextLine().split("\\s+");
             for (int i = 0; i < newStr.length; i++) {
                 System.out.println(newStr[i]);
-                printToData = printToData + "\n" + newStr[i];
+                printToData = printToData + newStr[i] + " " ;
             }
-            rootService.transactionList.add(new Transaction(Float.parseFloat(newStr[0]),"",""));
+            printToData = printToData + "\n";
+
+            /*
+            adapt this part for new Transaction attributes
+             */
+            if(newStr.length > 1) {
+                rootService.transactionList.add(new Transaction(Float.parseFloat(newStr[0]), newStr[1], LocalDate.parse(newStr[2]),""));
+            }
 
             transactionCount++;
         }
@@ -97,6 +113,10 @@ public class Main extends Application{
 
             }
         }
+
+        //rootService.categoryService.initCategorySeries(categorySeries);
+        String[] categories = rootService.categoryService.generateCategoryArray();
+
         //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 

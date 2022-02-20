@@ -8,6 +8,10 @@ import javafx.scene.control.ChoiceBox;
 
 import java.util.*;
 
+import javafx.scene.control.*;
+import java.time.*;
+
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
@@ -30,6 +34,9 @@ public class AddTransactionController {
 
     @FXML
     private AnchorPane anchor1;
+
+    @FXML
+    private DatePicker dateInput;
 
     @FXML
     private TextField fldSum;
@@ -59,6 +66,10 @@ public class AddTransactionController {
 
             //Beschreibung auslesen
 
+            //Datum auslesen
+
+            LocalDate transDate = dateInput.getValue();
+
 
             //
             // Einlesen der Daten in Liste und Datei
@@ -66,10 +77,13 @@ public class AddTransactionController {
 
 
             System.out.println("Eingabeprozess");
-            view.Main.rootService.transactionService.registerTransaction(transSum,transCathegory,"");
+            view.Main.rootService.transactionService.registerTransaction(transSum,transCathegory,transDate,"");
             //view.Main.printToData = view.Main.printToData + "\n" +  reportedActions.addingAction.actionToText(view.Main.transactionCount++, view.Main.transferList);
 
-            view.Main.printToData = view.Main.printToData + "\n" +  Main.rootService.transactionList.list.get(Main.transactionCount++).toText();
+            System.out.println(view.Main.printToData);
+            System.out.println("first order");
+
+            view.Main.printToData = view.Main.printToData + Main.rootService.transactionList.list.get(Main.transactionCount++).toText() + "\n";
             //transactionCount++;
             System.out.println(view.Main.printToData);
 
