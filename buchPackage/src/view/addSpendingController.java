@@ -18,7 +18,7 @@ import javafx.scene.layout.AnchorPane;
 
 import java.nio.file.*;
 
-public class AddTransactionController {
+public class addSpendingController {
 
     //vorläufige Auswahl an Kathegorien:
     public boolean cathHasShown = false;
@@ -29,9 +29,6 @@ public class AddTransactionController {
 
     @FXML
     public ChoiceBox<String> boxCathegory;
-
-    @FXML
-    public  ChoiceBox<String> boxAccount;
 
     @FXML
     private Button btnConfirmAction;
@@ -45,8 +42,7 @@ public class AddTransactionController {
     @FXML
     private TextField fldSum;
 
-
-    public AddTransactionController(){
+    public addSpendingController(){
         System.out.println("44");
 
         //boxCathegory.getItems().add(cath1);
@@ -62,14 +58,11 @@ public class AddTransactionController {
 
             //zugefügte Summe auslesen
             Float transSum = Float.parseFloat(fldSum.getText());
-
-            fldSum.setText("");
             System.out.println(transSum);
 
             // Kathegorie der Transaktion auslesen
 
             String transCathegory = boxCathegory.getValue();
-            boxCathegory.setValue(null);
 
 
             //Beschreibung auslesen
@@ -77,7 +70,6 @@ public class AddTransactionController {
             //Datum auslesen
 
             LocalDate transDate = dateInput.getValue();
-            dateInput.setValue(null);
 
 
             //
@@ -85,9 +77,15 @@ public class AddTransactionController {
             //
 
 
-            view.Main.rootService.transactionService.registerTransaction(transSum,transCathegory,transDate,"", TransactionWeight.EINNAHME,"");
+            view.Main.rootService.transactionService.registerTransaction(transSum,transCathegory,transDate,"", TransactionWeight.UNWICHTIG,"");
+            //view.Main.printToData = view.Main.printToData + "\n" +  reportedActions.addingAction.actionToText(view.Main.transactionCount++, view.Main.transferList);
+
+            System.out.println(view.Main.printToData);
+            System.out.println("first order");
 
             view.Main.printToData = view.Main.printToData + Main.rootService.transactionList.list.get(Main.transactionCount++).toText() + "\n";
+            //transactionCount++;
+            System.out.println(view.Main.printToData);
 
             Path p = Path.of("C:\\Users\\Luca\\Desktop\\HaushaltsbuchDaten\\transaktionsListe.txt");
             try{
@@ -97,21 +95,10 @@ public class AddTransactionController {
             catch (Exception e){
 
             }
-
-            //Aktualisieren des Kontostands
-
-            Main.rootService.accountList.getFirst().bookTransaction(transSum);
-
-            Path c = Path.of("C:\\Users\\Luca\\Desktop\\HaushaltsbuchDaten\\kontenListe.txt");
-            try{
-                Path filePath = Files.writeString(c, Main.rootService.savingsAccountService.accountListToText());
-
-            }
-            catch (Exception e){
-            }
         }
         catch(Exception e){
             System.out.println("Ein Wert wurde in ungültiger Weise eingegeben !");
+
         }
     }
 
@@ -140,4 +127,3 @@ public class AddTransactionController {
     }
 
 }
-

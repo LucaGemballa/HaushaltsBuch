@@ -1,7 +1,9 @@
 package view;
 
 import entity.CategorySeries;
+import entity.SavingsAccount;
 import entity.Transaction;
+import entity.TransactionWeight;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 //import java.awt.geom.Rectangle2D;
@@ -23,6 +25,7 @@ public class Main extends Application{
 
     public static String printToData ="";
     public static String printToDataCats ="";
+    public static String printToDataAccs ="";
 
 
     public static RootService rootService = new RootService();
@@ -53,8 +56,13 @@ public class Main extends Application{
             }
             printToData = printToData + "\n";
             //printToData = scan.nextLine().split("\\s+");
-            if(newStr.length > 1) {
-                rootService.transactionList.add(new Transaction(Float.parseFloat(newStr[0]), newStr[1], LocalDate.parse(newStr[2]),""));
+            if(Float.parseFloat(newStr[0]) > 0) {
+                rootService.transactionList.add(new Transaction(Float.parseFloat(newStr[0]), newStr[1], LocalDate.parse(newStr[2]),
+                        "", TransactionWeight.EINNAHME,""));
+            }
+            else {
+                rootService.transactionList.add(new Transaction(Float.parseFloat(newStr[0]), newStr[1], LocalDate.parse(newStr[2]),
+                        "", TransactionWeight.UNWICHTIG,""));
             }
 
             transactionCount++;
@@ -72,8 +80,13 @@ public class Main extends Application{
             /*
             adapt this part for new Transaction attributes
              */
-            if(newStr.length > 1) {
-                rootService.transactionList.add(new Transaction(Float.parseFloat(newStr[0]), newStr[1], LocalDate.parse(newStr[2]),""));
+            if(Float.parseFloat(newStr[0]) > 0) {
+                rootService.transactionList.add(new Transaction(Float.parseFloat(newStr[0]), newStr[1], LocalDate.parse(newStr[2]),
+                        "", TransactionWeight.EINNAHME,""));
+            }
+            else {
+                rootService.transactionList.add(new Transaction(Float.parseFloat(newStr[0]), newStr[1], LocalDate.parse(newStr[2]),
+                        "", TransactionWeight.UNWICHTIG,""));
             }
 
             transactionCount++;
@@ -119,6 +132,40 @@ public class Main extends Application{
 
         //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+        // Einlesen der Kontostände
+        //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        Scanner scanAccounts = null;
+        try{
+            scanAccounts = new Scanner(new File("C:\\Users\\Luca\\Desktop\\HaushaltsbuchDaten\\kontenListe.txt"));
+
+        }
+        catch (Exception e){
+        }
+
+        if(scanAccounts.hasNext()){
+            String[] newStr3 = scanAccounts.nextLine().split("\\s+");
+            for (int i = 0; i < newStr3.length; i++) {
+                System.out.println(newStr3[i]);
+                printToDataAccs = printToDataAccs + newStr3[i] + " ";
+            }
+            printToDataAccs = printToDataAccs + "\n";
+
+            rootService.accountList.add(new SavingsAccount(newStr3[0], Float.parseFloat(newStr3[1])));
+        }
+
+        while (scanAccounts.hasNext()){
+            //Text an Leerzeichen splitten
+            String[] newStr3 = scanAccounts.nextLine().split("\\s+");
+            for (int i = 0; i < newStr3.length; i++) {
+                System.out.println(newStr3[i]);
+                printToDataAccs = printToDataAccs + newStr3[i] + " " ;
+            }
+            printToDataAccs = printToDataAccs + "\n";
+
+            rootService.accountList.add(new SavingsAccount(newStr3[0], Float.parseFloat(newStr3[1])));
+        }
+
+        //--------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
         Parent root = FXMLLoader.load(getClass().getResource("mainScreen.fxml"));

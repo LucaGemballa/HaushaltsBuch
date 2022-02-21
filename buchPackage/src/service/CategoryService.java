@@ -17,15 +17,13 @@ public class CategoryService {
         rootService = rS;
     }
 
+
+
+    /*
+    initialise range of all dates for correct order
+     */
     public void initCategorySeries(CategorySeries catS){
-        System.out.println("begin initialisation");
-
         Collections.sort(Main.rootService.transactionList.list);
-
-        for (Transaction t: Main.rootService.transactionList.list) {
-            System.out.println(t.toText());
-        }
-
 
         /*
         initialise chart for all dates
@@ -40,33 +38,56 @@ public class CategoryService {
 
         while ( ! (x.getMonth().equals(y.getMonth()) && x.getYear() == y.getYear())){
             catS.seriesList.getLast().getData().add(new XYChart.Data<String, Number>(x.getMonth().toString() + " " + x.getYear(),0));
-            System.out.println(x.toString());
 
             x = x.plusMonths(1);
         }
+    }
 
+    public void initEarningChart(CategorySeries catS){
 
+        initCategorySeries(catS);
         /*
         add all transactions to chart
          */
         for (String a : Main.cathegoryList) {
             if(! a.equals(Main.cathegoryList.getFirst())) {
-                System.out.println(a);
                 catS.seriesList.add(new XYChart.Series<String, Number>());
                 catS.seriesList.getLast().setName(a);
             }
 
             for (Transaction t: Main.rootService.transactionList.list) {
                 if(t.getTransactionCathegory().equals(a)){
-                    catS.seriesList.getLast().getData().add(new XYChart.Data<String, Number>(t.getTransactionDate().getMonth().toString() + " " + t.getTransactionDate().getYear(),t.getTransactionSum()));
-                    System.out.println(t.toText());
-
+                    if(t.getTransactionSum() > 0) {
+                        catS.seriesList.getLast().getData().add(new XYChart.Data<String, Number>
+                                (t.getTransactionDate().getMonth().toString() + " " + t.getTransactionDate().getYear(), t.getTransactionSum()));
+                    }
                 }
             }
         }
-        System.out.println("end initialisation");
+    }
 
-        System.out.println(catS.seriesList.size());
+    public void initSpendingChart(CategorySeries catS){
+        initCategorySeries(catS);
+
+        /*
+        add all transactions to chart
+         */
+
+        for (String a : Main.cathegoryList) {
+            if(! a.equals(Main.cathegoryList.getFirst())) {
+                catS.seriesList.add(new XYChart.Series<String, Number>());
+                catS.seriesList.getLast().setName(a);
+            }
+
+            for (Transaction t: Main.rootService.transactionList.list) {
+                if(t.getTransactionCathegory().equals(a)){
+                    if(t.getTransactionSum() < 0) {
+                        catS.seriesList.getLast().getData().add(new XYChart.Data<String, Number>
+                                (t.getTransactionDate().getMonth().toString() + " " + t.getTransactionDate().getYear(), -t.getTransactionSum()));
+                    }
+                }
+            }
+        }
     }
 
     public String[] generateCategoryArray(){

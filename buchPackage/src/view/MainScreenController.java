@@ -3,7 +3,6 @@ package view;
 import entity.CategorySeries;
 import javafx.fxml.FXML;
 import javafx.scene.chart.StackedBarChart;
-import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.fxml.FXMLLoader;
 //import javafx.scene.Parent;
@@ -23,8 +22,6 @@ import java.io.IOException;
 
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.StackedBarChart;
-import javafx.scene.chart.XYChart;
 import javafx.collections.FXCollections;
 import java.util.Arrays;
 
@@ -34,27 +31,35 @@ public class MainScreenController {
     //public static LinkedList<moneyAction> transferList = new LinkedList<>();
 
     @FXML
-    private Button btnEarnedThis;
+    private Button btnAddEarning;
 
     @FXML
-    private Button btnSpending;
+    private Button btnAddSpending;
 
     @FXML
     private Button editCathegories;
 
 
+    public Boolean notInitialised = true;
+
     final CategoryAxis xAxis = new CategoryAxis();
     final NumberAxis yAxis = new NumberAxis();
 
-    public static CategorySeries categorySeries = new CategorySeries();
+    public static CategorySeries categorySeriesEarnings = new CategorySeries();
+    public static CategorySeries categorySeriesSpendings = new CategorySeries();
+
 
     @FXML
     private StackedBarChart<String,Number> earningChart =
             new StackedBarChart<String,Number>(xAxis,yAxis);
 
-    static XYChart.Series<String,Number> series1 =
-            new XYChart.Series<String,Number>();
-    public Boolean notInitialised = true;
+
+    final CategoryAxis xAxisSpending = new CategoryAxis();
+    final NumberAxis yAxisSpending = new NumberAxis();
+
+    @FXML
+    private StackedBarChart<String,Number> spendingChart =
+            new StackedBarChart<String,Number>(xAxisSpending,yAxisSpending);
 
     @FXML
     void display(){
@@ -62,7 +67,7 @@ public class MainScreenController {
     }
 
     @FXML
-    public void AddTransactionWindow (){
+    public void AddEarningWindow (){
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("addTransaction.fxml"));
@@ -80,7 +85,27 @@ public class MainScreenController {
             Logger logger = Logger.getLogger(getClass().getName());
             logger.log(Level.SEVERE, "Failed to create new Window.", e);
         }
+    }
 
+    @FXML
+    public void AddSpendingWindow (){
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("addSpending.fxml"));
+            /*
+             * if "fx:controller" is not set in fxml
+             * fxmlLoader.setController(NewWindowController);
+             */
+
+            Scene scene = new Scene(fxmlLoader.load(), 700, 720);
+            Stage stage = new Stage();
+            stage.setTitle("Ausgabe hinzufügen");
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            Logger logger = Logger.getLogger(getClass().getName());
+            logger.log(Level.SEVERE, "Failed to create new Window.", e);
+        }
     }
 
     @FXML
@@ -105,14 +130,14 @@ public class MainScreenController {
     }
 
     @FXML
-    public  void initializeCharts(){
+    public void initializeCharts(){
         if(notInitialised){
             /*
             set up categories and months for the charts
              */
             xAxis.setLabel("Monat");
             String[] categories = Main.rootService.categoryService.generateCategoryArray();
-            Main.rootService.categoryService.initCategorySeries(categorySeries);
+            Main.rootService.categoryService.initEarningChart(categorySeriesEarnings);
 
             xAxis.setCategories(FXCollections.<String>observableArrayList(Arrays.asList(categories)));
 
@@ -123,7 +148,24 @@ public class MainScreenController {
             for each month add each transaction to its series
              */
 
-            earningChart.getData().addAll(categorySeries.seriesList);
+            earningChart.getData().addAll(categorySeriesEarnings.seriesList);
+
+            //-----------------------------------------------------spendingChart------------------------------------------------------
+
+            Main.rootService.categoryService.initSpendingChart(categorySeriesSpendings);
+
+            xAxisSpending.setLabel("Monat");
+
+            xAxisSpending.setCategories(FXCollections.<String>observableArrayList(Arrays.asList(categories)));
+
+            yAxisSpending.setLabel("€");
+
+            /*
+            for each month add each transaction to its series
+             */
+
+            spendingChart.getData().addAll(categorySeriesSpendings.seriesList);
+
             notInitialised = false;
         }
     }
