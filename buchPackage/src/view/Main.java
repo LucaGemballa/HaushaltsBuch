@@ -137,7 +137,6 @@ public class Main extends Application{
         Scanner scanAccounts = null;
         try{
             scanAccounts = new Scanner(new File("C:\\Users\\Luca\\Desktop\\HaushaltsbuchDaten\\kontenListe.txt"));
-
         }
         catch (Exception e){
         }
@@ -168,7 +167,15 @@ public class Main extends Application{
         //--------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-        Parent root = FXMLLoader.load(getClass().getResource("mainScreen.fxml"));
+        //Parent root = FXMLLoader.load(getClass().getResource("mainScreen.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("mainScreen.fxml"));
+        Parent root = loader.load();
+
+        MainScreenController c = loader.getController();
+
+        c.refreshMainTab();
+
+
         primaryStage.setTitle("Haushaltsbuch Assistent");
         primaryStage.setScene(new Scene(root, 1920, 1080));
 
@@ -184,7 +191,9 @@ public class Main extends Application{
 
 
         primaryStage.show();
-
+        for(SavingsAccount s : rootService.accountList){
+            c.addSavingsAccountPane();
+        }
     }
 
     public static void main (String args[]){

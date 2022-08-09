@@ -7,8 +7,18 @@ import javafx.scene.control.Button;
 import javafx.fxml.FXMLLoader;
 //import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Tab;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.TilePane;
 import javafx.stage.Stage;
+import javafx.event.*;
+import  javafx.scene.input.MouseEvent;
 
+//import java.awt.event.MouseEvent;
+import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 //imports for IOException
@@ -39,6 +49,22 @@ public class MainScreenController {
     @FXML
     private Button editCathegories;
 
+    @FXML
+    private Label mainAccountBalance;
+
+    @FXML
+    private Label currentMonthBalance;
+
+    @FXML
+    private Tab mainTab;
+
+    @FXML
+    private ScrollPane savingsScrollPane;
+    @FXML
+    private AnchorPane savingsAccountsPane;
+
+    @FXML
+    private TilePane savingsAccounts;
 
     public Boolean notInitialised = true;
 
@@ -80,6 +106,7 @@ public class MainScreenController {
             Stage stage = new Stage();
             stage.setTitle("Einnahme hinzufügen");
             stage.setScene(scene);
+            stage.setOnCloseRequest( event -> {refreshMainTab();} );
             stage.show();
         } catch (IOException e) {
             Logger logger = Logger.getLogger(getClass().getName());
@@ -101,6 +128,7 @@ public class MainScreenController {
             Stage stage = new Stage();
             stage.setTitle("Ausgabe hinzufügen");
             stage.setScene(scene);
+            stage.setOnCloseRequest( event -> {refreshMainTab();} );
             stage.show();
         } catch (IOException e) {
             Logger logger = Logger.getLogger(getClass().getName());
@@ -170,6 +198,28 @@ public class MainScreenController {
         }
     }
 
+    @FXML
+    public void refreshMainTab(){
+        mainAccountBalance.setText(String.valueOf(Main.rootService.accountList.getFirst().balance));
+        currentMonthBalance.setText(String.valueOf(Main.rootService.transactionService.calculateMonthlyBalance(LocalDate.now())));
+    }
+
+    @FXML
+    public void addSavingsAccountPane(){
+        GridPane g = new GridPane();
+        Label l = new Label("Name");
+        Label m = new Label("money");
+        Button b = new Button("pressley");
+        b.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                                @Override public void handle(MouseEvent e) {
+
+                                    AddEarningWindow();
+                                }
+                            });
+        g.addRow(0,l,b);
+        System.out.println("f");
+        savingsAccounts.getChildren().add(g);
+    }
 
     //general method for opening new window
     @FXML

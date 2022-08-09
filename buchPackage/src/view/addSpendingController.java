@@ -2,6 +2,7 @@ package view;
 
 import java.lang.*;
 
+import entity.Transaction;
 import entity.TransactionWeight;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -17,6 +18,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
 import java.nio.file.*;
+
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 
 public class addSpendingController {
 
@@ -34,10 +38,21 @@ public class addSpendingController {
     private Button btnConfirmAction;
 
     @FXML
+    private CheckBox splitSpending;
+
+    @FXML
+    private TextField monthsToSplit;
+
+    @FXML
+    private TextField monthsToSplitRythm;
+
+    @FXML
     private AnchorPane anchor1;
 
     @FXML
     private DatePicker dateInput;
+
+
 
     @FXML
     private TextField fldSum;
@@ -54,15 +69,18 @@ public class addSpendingController {
     @FXML
     public void confirmAction(){
         try{
+            final DecimalFormat df = new DecimalFormat("0.00");
+            LinkedList<Transaction> listForTransactions = new LinkedList<Transaction>();
             //LinkedList<moneyAction> list1 = new LinkedList<moneyAction>();
 
             //zugefügte Summe auslesen
-            Float transSum = Float.parseFloat(fldSum.getText());
+            Float transSum = Float.parseFloat(fldSum.getText()) * (-1);
             System.out.println(transSum);
-
+            fldSum.setText("");
             // Kathegorie der Transaktion auslesen
 
             String transCathegory = boxCathegory.getValue();
+            boxCathegory.setValue(null);
 
 
             //Beschreibung auslesen
@@ -70,30 +88,68 @@ public class addSpendingController {
             //Datum auslesen
 
             LocalDate transDate = dateInput.getValue();
+            dateInput.setValue(null);
+
+            //Teilung der Ausgabe kontrollieren und vornehmen
+            //Boolean split = splitSpending.isSelected();
+
+            int nrOfTransactions = 1;
+            if(splitSpending.isSelected()){
+                int splitForXMonths = Integer.parseInt(monthsToSplit.getCharacters().toString());
+                int splitRythm = Integer.parseInt(monthsToSplitRythm.getCharacters().toString());
+
+                assert(splitForXMonths % splitRythm == 0);
+                nrOfTransactions = splitForXMonths /splitRythm;
+                System.out.println("Konvertierung beginnt");
+
+                float singleTransactionSum = transSum / nrOfTransactions;
+                singleTransactionSum = Main.rootService.transactionService.round2(singleTransactionSum,2) ;
+                System.out.println("Konvertierung erfolgreich");
+
+                for(int i=0;i<nrOfTransactions;i++){
+                    listForTransactions.add(new Transaction(singleTransactionSum,transCathegory,transDate,"", TransactionWeight.UNWICHTIG,""));
+                    transDate = transDate.plusMonths(splitRythm);
+                }
+            }
+            else{
+                System.out.println("Konvertierung beginnt");
+                transSum = Main.rootService.transactionService.round2(transSum,2);
+                System.out.println("Konvertierung erfolgreich");
+                listForTransactions.add(new Transaction(transSum,transCathegory,transDate,"", TransactionWeight.UNWICHTIG,""));
+            }
 
 
             //
             // Einlesen der Daten in Liste und Datei
             //
+            for(Transaction t : listForTransactions){
+                view.Main.rootService.transactionService.registerTransaction(t);
+                //view.Main.printToData = view.Main.printToData + "\n" +  reportedActions.addingAction.actionToText(view.Main.transactionCount++, view.Main.transferList);
 
+                System.out.println(view.Main.printToData);
 
-            view.Main.rootService.transactionService.registerTransaction(transSum,transCathegory,transDate,"", TransactionWeight.UNWICHTIG,"");
-            //view.Main.printToData = view.Main.printToData + "\n" +  reportedActions.addingAction.actionToText(view.Main.transactionCount++, view.Main.transferList);
+                view.Main.printToData = view.Main.printToData + Main.rootService.transactionList.list.get(Main.transactionCount++).toText() + "\n";
+                //transactionCount++;
+                System.out.println(view.Main.printToData);
 
-            System.out.println(view.Main.printToData);
-            System.out.println("first order");
+                System.out.println("Es wurden" + nrOfTransactions + "Transaktionen gebucht" );
 
-            view.Main.printToData = view.Main.printToData + Main.rootService.transactionList.list.get(Main.transactionCount++).toText() + "\n";
-            //transactionCount++;
-            System.out.println(view.Main.printToData);
+                Path p = Path.of("C:\\Users\\Luca\\Desktop\\HaushaltsbuchDaten\\transaktionsListe.txt");
+                try{
+                    Path filePath = Files.writeString(p, view.Main.printToData);
+                }
+                catch (Exception e){
+                }
+            }
 
-            Path p = Path.of("C:\\Users\\Luca\\Desktop\\HaushaltsbuchDaten\\transaktionsListe.txt");
+            //Aktualisieren des Kontostands
+            Main.rootService.accountList.getFirst().bookTransaction(transSum);
+
+            Path c = Path.of("C:\\Users\\Luca\\Desktop\\HaushaltsbuchDaten\\kontenListe.txt");
             try{
-                Path filePath = Files.writeString(p, view.Main.printToData);
-
+                Path filePath = Files.writeString(c, Main.rootService.savingsAccountService.accountListToText());
             }
             catch (Exception e){
-
             }
         }
         catch(Exception e){

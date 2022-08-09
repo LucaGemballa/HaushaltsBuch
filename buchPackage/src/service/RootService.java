@@ -21,8 +21,6 @@ public class RootService {
     public TransactionList transactionList;
     public LinkedList<SavingsAccount> accountList;
 
-
-
     public RootService(){
         transactionService = new TransactionService(this);
         fileService = new FileService(this);

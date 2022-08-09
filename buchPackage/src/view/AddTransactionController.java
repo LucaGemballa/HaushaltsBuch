@@ -2,10 +2,13 @@ package view;
 
 import java.lang.*;
 
+import entity.Transaction;
 import entity.TransactionWeight;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 
 import java.util.*;
 
@@ -83,23 +86,21 @@ public class AddTransactionController {
             //
             // Einlesen der Daten in Liste und Datei
             //
+            Transaction t = new Transaction(transSum,transCathegory,transDate,"", TransactionWeight.EINNAHME,"");
 
-
-            view.Main.rootService.transactionService.registerTransaction(transSum,transCathegory,transDate,"", TransactionWeight.EINNAHME,"");
+            view.Main.rootService.transactionService.registerTransaction(t);
 
             view.Main.printToData = view.Main.printToData + Main.rootService.transactionList.list.get(Main.transactionCount++).toText() + "\n";
 
             Path p = Path.of("C:\\Users\\Luca\\Desktop\\HaushaltsbuchDaten\\transaktionsListe.txt");
             try{
                 Path filePath = Files.writeString(p, view.Main.printToData);
-
             }
             catch (Exception e){
 
             }
 
             //Aktualisieren des Kontostands
-
             Main.rootService.accountList.getFirst().bookTransaction(transSum);
 
             Path c = Path.of("C:\\Users\\Luca\\Desktop\\HaushaltsbuchDaten\\kontenListe.txt");
@@ -109,6 +110,8 @@ public class AddTransactionController {
             }
             catch (Exception e){
             }
+
+
         }
         catch(Exception e){
             System.out.println("Ein Wert wurde in ungültiger Weise eingegeben !");
