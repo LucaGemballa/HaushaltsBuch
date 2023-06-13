@@ -92,7 +92,7 @@ public class AddTransactionController {
 
             view.Main.printToData = view.Main.printToData + Main.rootService.transactionList.list.get(Main.transactionCount++).toText() + "\n";
 
-            Path p = Path.of("C:\\Users\\Luca\\Desktop\\HaushaltsbuchDaten\\transaktionsListe.txt");
+            Path p = Path.of(Main.transactionPath);
             try{
                 Path filePath = Files.writeString(p, view.Main.printToData);
             }
@@ -103,7 +103,7 @@ public class AddTransactionController {
             //Aktualisieren des Kontostands
             Main.rootService.accountList.getFirst().bookTransaction(transSum);
 
-            Path c = Path.of("C:\\Users\\Luca\\Desktop\\HaushaltsbuchDaten\\kontenListe.txt");
+            Path c = Path.of(Main.accountPath);
             try{
                 Path filePath = Files.writeString(c, Main.rootService.savingsAccountService.accountListToText());
 
@@ -124,7 +124,7 @@ public class AddTransactionController {
         System.out.println(cathHasShown);
         if(cathHasShown == false){
             System.out.println("1");
-            ListIterator<String> catIterator = Main.cathegoryList.listIterator(0);
+            ListIterator<String> catIterator = Main.categoryList.listIterator(0);
             while (catIterator.hasNext()){
                 String Test = catIterator.next();
                 boxCathegory.getItems().add(Test);

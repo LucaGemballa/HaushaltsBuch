@@ -23,19 +23,55 @@ public class Transaction implements Comparable<Transaction>{
     }
 
     public String toText(){
-        String retVal = Float.toString(transactionSum) + " " + transactionCathegory + " " + transactionDate;
+        int maxLength = 0;
+        if (transactionSum < 0.0) maxLength = 7;
+        else maxLength = 6;
+
+        int s = Float.toString(transactionSum).length();
+
+        String tSum = Float.toString(transactionSum);
+        if(s > maxLength) tSum = tSum.substring(0, maxLength);
+
+        while(tSum.length() < 7){
+            tSum = " " + tSum;
+        }
+
+        String retVal = tSum + " " + transactionCathegory + " " + transactionDate;
         return retVal;
     }
 
+    /*
+    for use in calculations etc
+     */
     public float getTransactionSum(){
         return transactionSum;
     }
 
-    public String getTransactionCathegory(){
+    /*
+    for output in tableview
+     */
+    public String getTransactionSumString(){
+        int maxLength = 0;
+
+        if (transactionSum < 0.0) maxLength = 7;
+        else maxLength = 6;
+
+        int s = Float.toString(transactionSum).length();
+
+        String tSum = Float.toString(transactionSum);
+        if(s > maxLength) tSum = tSum.substring(0, maxLength);
+
+        while(tSum.length() < 7){
+            tSum = " " + tSum;
+        }
+        return tSum;
+    }
+
+    public String getTransactionCategory(){
         return transactionCathegory;
     }
 
-    public LocalDate getTransactionDate(){return  transactionDate; }
+    public LocalDate getTransactionDate(){return transactionDate; }
 
     @Override
     public int compareTo(Transaction o){

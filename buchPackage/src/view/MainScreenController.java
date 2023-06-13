@@ -7,12 +7,11 @@ import javafx.scene.control.Button;
 import javafx.fxml.FXMLLoader;
 //import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.*;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.TilePane;
+
 import javafx.stage.Stage;
 import javafx.event.*;
 import  javafx.scene.input.MouseEvent;
@@ -57,6 +56,8 @@ public class MainScreenController {
 
     @FXML
     private Tab mainTab;
+    @FXML
+    private Pane basePane;
 
     @FXML
     private ScrollPane savingsScrollPane;
@@ -88,26 +89,12 @@ public class MainScreenController {
             new StackedBarChart<String,Number>(xAxisSpending,yAxisSpending);
 
     @FXML
-    void display(){
-        System.out.println("666");
-    }
-
-    @FXML
     public void AddEarningWindow (){
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(getClass().getResource("addTransaction.fxml"));
-            /*
-             * if "fx:controller" is not set in fxml
-             * fxmlLoader.setController(NewWindowController);
-             */
+            Pane newLoadedPane =        FXMLLoader.load(getClass().getResource("/view/addTransaction.fxml"));
+            basePane.getChildren().clear();
+            basePane.getChildren().add(newLoadedPane);
 
-            Scene scene = new Scene(fxmlLoader.load(), 700, 720);
-            Stage stage = new Stage();
-            stage.setTitle("Einnahme hinzufügen");
-            stage.setScene(scene);
-            stage.setOnCloseRequest( event -> {refreshMainTab();} );
-            stage.show();
         } catch (IOException e) {
             Logger logger = Logger.getLogger(getClass().getName());
             logger.log(Level.SEVERE, "Failed to create new Window.", e);
@@ -117,19 +104,12 @@ public class MainScreenController {
     @FXML
     public void AddSpendingWindow (){
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(getClass().getResource("addSpending.fxml"));
-            /*
-             * if "fx:controller" is not set in fxml
-             * fxmlLoader.setController(NewWindowController);
-             */
 
-            Scene scene = new Scene(fxmlLoader.load(), 700, 720);
-            Stage stage = new Stage();
-            stage.setTitle("Ausgabe hinzufügen");
-            stage.setScene(scene);
-            stage.setOnCloseRequest( event -> {refreshMainTab();} );
-            stage.show();
+            Pane newLoadedPane =        FXMLLoader.load(getClass().getResource("/view/addSpending.fxml"));
+            basePane.getChildren().clear();
+            basePane.getChildren().add(newLoadedPane);
+
+
         } catch (IOException e) {
             Logger logger = Logger.getLogger(getClass().getName());
             logger.log(Level.SEVERE, "Failed to create new Window.", e);
@@ -139,17 +119,13 @@ public class MainScreenController {
     @FXML
     public void AddCathegoriesWindow(){
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(getClass().getResource("editCategories.fxml"));
-            /*
-             * if "fx:controller" is not set in fxml
-             * fxmlLoader.setController(NewWindowController);
-             */
-            Scene scene = new Scene(fxmlLoader.load(), 630, 400);
-            Stage stage = new Stage();
-            stage.setTitle("Kathegoriemanager");
-            stage.setScene(scene);
-            stage.show();
+
+            Pane newLoadedPane =    FXMLLoader.load(getClass().getResource("/view/editCategories.fxml"));
+
+
+            basePane.getChildren().clear();
+            basePane.getChildren().add(newLoadedPane);
+
         } catch (IOException e) {
             Logger logger = Logger.getLogger(getClass().getName());
             logger.log(Level.SEVERE, "Failed to create new Window.", e);
@@ -243,8 +219,20 @@ public class MainScreenController {
         }
 
     }
-    //@Override
-    //public void initialize(URL url, ResourceBundle rb){
-    //nope
-    //}
+
+    @FXML
+    private Button btnShowTransactionHistory;
+
+    @FXML
+    public void showTransactionHistory(){
+        try {
+            Pane newLoadedPane =    FXMLLoader.load(getClass().getResource("/view/transactionHistory.fxml"));
+            basePane.getChildren().clear();
+            basePane.getChildren().add(newLoadedPane);
+
+        } catch (IOException e) {
+            Logger logger = Logger.getLogger(getClass().getName());
+            logger.log(Level.SEVERE, "Failed to create new Window.", e);
+        }
+    }
 }

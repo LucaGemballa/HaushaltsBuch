@@ -19,6 +19,8 @@ import java.util.LinkedList;
 import java.io.File;
 import java.util.Scanner;
 
+import java.nio.file.*;
+
 import service.*;
 
 public class Main extends Application{
@@ -27,12 +29,17 @@ public class Main extends Application{
     public static String printToDataCats ="";
     public static String printToDataAccs ="";
 
+    // global paths for data access
+    public static final String categoryPath =  "C:\\Users\\lucag\\Documents\\HaushaltsbuchDaten\\kathegorienListe.txt";
+    public static final String transactionPath = "C:\\Users\\lucag\\Documents\\HaushaltsbuchDaten\\transaktionsListe.txt";
+    public static final String accountPath = "C:\\Users\\lucag\\Documents\\HaushaltsbuchDaten\\kontenListe.txt";
+
 
     public static RootService rootService = new RootService();
     //public static CategorySeries categorySeries = new CategorySeries();
 
 
-    public static LinkedList<String> cathegoryList = new LinkedList<String>();
+    public static LinkedList<String> categoryList = new LinkedList<String>();
     public static int transactionCount = 0;
 
     @Override
@@ -42,7 +49,7 @@ public class Main extends Application{
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         Scanner scan = null;
         try{
-            scan = new Scanner(new File("C:\\Users\\Luca\\Desktop\\HaushaltsbuchDaten\\transaktionsListe.txt"));
+            scan = new Scanner(new File(transactionPath));
 
         }
         catch (Exception e){
@@ -99,7 +106,7 @@ public class Main extends Application{
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         Scanner scanCathegories = null;
         try{
-            scanCathegories = new Scanner(new File("C:\\Users\\Luca\\Desktop\\HaushaltsbuchDaten\\kathegorienListe.txt"));
+            scanCathegories = new Scanner(new File(categoryPath));
 
         }
         catch (Exception e){
@@ -109,7 +116,7 @@ public class Main extends Application{
             String[] newStr2 = scanCathegories.nextLine().split("\\s+");
             for (int i = 0; i < newStr2.length; i++) {
                 System.out.println(newStr2[i]);
-                cathegoryList.add(newStr2[i]);
+                categoryList.add(newStr2[i]);
                 printToDataCats = printToDataCats + newStr2[i];
 
             }
@@ -121,9 +128,8 @@ public class Main extends Application{
             String[] newStr2 = scanCathegories.nextLine().split("\\s+");
             for (int i = 0; i < newStr2.length; i++) {
                 System.out.println(newStr2[i]);
-                cathegoryList.add(newStr2[i]);
+                categoryList.add(newStr2[i]);
                 printToDataCats = printToDataCats + "\n" + newStr2[i];
-
             }
         }
 
@@ -136,7 +142,7 @@ public class Main extends Application{
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         Scanner scanAccounts = null;
         try{
-            scanAccounts = new Scanner(new File("C:\\Users\\Luca\\Desktop\\HaushaltsbuchDaten\\kontenListe.txt"));
+            scanAccounts = new Scanner(new File(accountPath));
         }
         catch (Exception e){
         }
@@ -202,7 +208,5 @@ public class Main extends Application{
         System.out.println("hallo");
 
         launch(args);
-
-
     }
 }
