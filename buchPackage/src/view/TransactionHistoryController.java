@@ -43,6 +43,8 @@ public class TransactionHistoryController {
     public TableColumn<Transaction, String> tableColumnTransactionSum;
     @FXML
     public TableColumn<Transaction, String> tableColumnTransactionDate;
+    @FXML
+    public TableColumn<Transaction, String> tableColumnDescription;
 
     @FXML
     public void initialize(){
@@ -52,5 +54,7 @@ public class TransactionHistoryController {
 
         // Need to give LocalDates a suitable compare method
         tableColumnTransactionDate.setCellValueFactory(c-> new SimpleStringProperty(c.getValue().getTransactionDate().format(DateTimeFormatter.ofPattern("dd.LL.yyyy"))));
+
+        tableColumnDescription.setCellValueFactory(c-> new SimpleStringProperty(c.getValue().getTransactionDescription()));
     }
 }

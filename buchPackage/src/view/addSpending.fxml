@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.effect.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.text.*?>
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="672.0" minWidth="700.0" prefHeight="672.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.addSpendingController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="672.0" minWidth="700.0" prefHeight="672.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.addSpendingController">
     <children>
         <AnchorPane layoutX="379.0" layoutY="22.0" prefHeight="297.0" prefWidth="278.0" style="-fx-background-color: C4C4CC;">
             <children>
@@ -51,13 +54,13 @@
                         <Tooltip text="hallo oger" />
                     </tooltip>
                 </ChoiceBox>
-                <Text layoutX="16.0" layoutY="144.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kathegorie :" />
+                <Text layoutX="16.0" layoutY="144.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kategorie :" />
             </children>
         </AnchorPane>
         <AnchorPane layoutX="29.0" layoutY="401.0" prefHeight="221.0" prefWidth="322.0" style="-fx-background-color: C4C4CC;">
             <children>
                 <TextArea fx:id="fieldSum" layoutX="14.0" layoutY="28.0" prefHeight="174.0" prefWidth="294.0" />
-                <Text layoutX="14.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kommentar : " />
+                <Text layoutX="14.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Beschreibung:" />
             </children>
         </AnchorPane>
         <Button fx:id="btnConfirmAction" layoutX="379.0" layoutY="491.0" mnemonicParsing="false" onMouseClicked="#confirmAction" prefHeight="109.0" prefWidth="278.0" text="Eingabe bestätigen" />

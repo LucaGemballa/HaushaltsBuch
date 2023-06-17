@@ -1,21 +1,20 @@
 package entity;
 
-import java.util.*;
 import java.time.*;
 
 public class Transaction implements Comparable<Transaction>{
 
     float transactionSum;
-    String transactionCathegory;
+    String transactionCategory;
     String transactionDescription;
     LocalDate transactionDate;
     String transactionSource;
     TransactionWeight transactionWeight;
 
 
-    public Transaction (float sum, String cathegory,LocalDate date,String source,TransactionWeight weight, String description){
+    public Transaction (float sum, String category,LocalDate date,String source,TransactionWeight weight, String description){
         transactionSum = sum;
-        transactionCathegory = cathegory;
+        transactionCategory = category;
         transactionDescription = description;
         transactionDate = date;
         transactionSource = source;
@@ -36,7 +35,7 @@ public class Transaction implements Comparable<Transaction>{
             tSum = " " + tSum;
         }
 
-        String retVal = tSum + " " + transactionCathegory + " " + transactionDate;
+        String retVal = tSum + " " + transactionCategory + " " + transactionDate + " " + transactionDescription;
         return retVal;
     }
 
@@ -67,8 +66,10 @@ public class Transaction implements Comparable<Transaction>{
         return tSum;
     }
 
+    public String getTransactionDescription() {return transactionDescription;}
+
     public String getTransactionCategory(){
-        return transactionCathegory;
+        return transactionCategory;
     }
 
     public LocalDate getTransactionDate(){return transactionDate; }

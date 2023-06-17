@@ -13,6 +13,7 @@
           <TableColumn fx:id="tableColumnCategory" prefWidth="128.0" text="Kategorie" />
           <TableColumn fx:id="tableColumnTransactionSum" prefWidth="131.0" text="Betrag" />
             <TableColumn fx:id="tableColumnTransactionDate" prefWidth="98.0" text="Datum" />
+            <TableColumn fx:id="tableColumnDescription" prefWidth="121.0" text="Beschreibung" />
         </columns>
       </TableView>
    </children>

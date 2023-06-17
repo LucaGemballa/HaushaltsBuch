@@ -93,6 +93,8 @@ public class addSpendingController {
             //Teilung der Ausgabe kontrollieren und vornehmen
             //Boolean split = splitSpending.isSelected();
 
+            System.out.println(transSum + " " + transCathegory + " " + transDate + " ");
+
             int nrOfTransactions = 1;
             if(splitSpending.isSelected()){
                 int splitForXMonths = Integer.parseInt(monthsToSplit.getCharacters().toString());
@@ -128,7 +130,8 @@ public class addSpendingController {
 
                 System.out.println(view.Main.printToData);
 
-                view.Main.printToData = view.Main.printToData + Main.rootService.transactionList.list.get(Main.transactionCount++).toText() + "\n";
+
+                view.Main.printToData = view.Main.printToData + t.toText() + "\n";
                 //transactionCount++;
                 System.out.println(view.Main.printToData);
 
@@ -153,6 +156,7 @@ public class addSpendingController {
             }
         }
         catch(Exception e){
+            System.out.println(e);
             System.out.println("Ein Wert wurde in ungültiger Weise eingegeben !");
 
         }

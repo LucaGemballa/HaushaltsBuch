@@ -48,6 +48,9 @@ public class AddTransactionController {
     @FXML
     private TextField fldSum;
 
+    @FXML
+    private TextArea txtAreaDescription;
+
 
     public AddTransactionController(){
         System.out.println("44");
@@ -76,9 +79,10 @@ public class AddTransactionController {
 
 
             //Beschreibung auslesen
+            String transDescription = txtAreaDescription.getText();
+            txtAreaDescription.setText("");
 
             //Datum auslesen
-
             LocalDate transDate = dateInput.getValue();
             dateInput.setValue(null);
 
@@ -86,11 +90,11 @@ public class AddTransactionController {
             //
             // Einlesen der Daten in Liste und Datei
             //
-            Transaction t = new Transaction(transSum,transCathegory,transDate,"", TransactionWeight.EINNAHME,"");
+            Transaction t = new Transaction(transSum,transCathegory,transDate,"", TransactionWeight.EINNAHME,transDescription);
 
             view.Main.rootService.transactionService.registerTransaction(t);
 
-            view.Main.printToData = view.Main.printToData + Main.rootService.transactionList.list.get(Main.transactionCount++).toText() + "\n";
+            view.Main.printToData = view.Main.printToData + t.toText() + "\n";
 
             Path p = Path.of(Main.transactionPath);
             try{

@@ -176,8 +176,8 @@ public class MainScreenController {
 
     @FXML
     public void refreshMainTab(){
-        mainAccountBalance.setText(String.valueOf(Main.rootService.accountList.getFirst().balance));
-        currentMonthBalance.setText(String.valueOf(Main.rootService.transactionService.calculateMonthlyBalance(LocalDate.now())));
+        mainAccountBalance.setText(Main.rootService.accountList.getFirst().getBalanceString());
+        currentMonthBalance.setText(Main.rootService.transactionService.calculateMonthlyBalanceString(LocalDate.now()));
     }
 
     @FXML
