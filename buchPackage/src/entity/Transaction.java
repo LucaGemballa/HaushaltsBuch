@@ -10,15 +10,17 @@ public class Transaction implements Comparable<Transaction>{
     LocalDate transactionDate;
     String transactionSource;
     TransactionWeight transactionWeight;
+    int transactionID;
 
 
-    public Transaction (float sum, String category,LocalDate date,String source,TransactionWeight weight, String description){
+    public Transaction (float sum, String category,LocalDate date,String source,TransactionWeight weight, String description, int id){
         transactionSum = sum;
         transactionCategory = category;
         transactionDescription = description;
         transactionDate = date;
         transactionSource = source;
         transactionWeight = weight;
+        transactionID = id;
     }
 
     public String toText(){
@@ -31,9 +33,13 @@ public class Transaction implements Comparable<Transaction>{
         String tSum = Float.toString(transactionSum);
         if(s > maxLength) tSum = tSum.substring(0, maxLength);
 
+        // do not really know what this was intended to do!
+        /*
         while(tSum.length() < 7){
             tSum = " " + tSum;
         }
+
+         */
 
         String retVal = tSum + " " + transactionCategory + " " + transactionDate + " " + transactionDescription;
         return retVal;
@@ -73,6 +79,8 @@ public class Transaction implements Comparable<Transaction>{
     }
 
     public LocalDate getTransactionDate(){return transactionDate; }
+
+    public int getTransactionID(){return transactionID; }
 
     @Override
     public int compareTo(Transaction o){

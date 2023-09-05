@@ -44,7 +44,7 @@
                         <Tooltip text="hallo oger" />
                     </tooltip>
                 </ChoiceBox>
-                <Text layoutX="14.0" layoutY="165.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kathegorie :" />
+                <Text layoutX="14.0" layoutY="165.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kategorie :" />
             </children>
         </AnchorPane>
         <AnchorPane layoutX="29.0" layoutY="270.0" prefHeight="197.0" prefWidth="322.0" style="-fx-background-color: C4C4CC;">

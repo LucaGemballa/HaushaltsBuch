@@ -54,8 +54,10 @@ public class Main extends Application{
         }
         catch (Exception e){
         }
-
+        int newID = 0;
         if(scan.hasNext()){
+            newID = rootService.transactionList.transactionIDCounter++ ;
+            //right now split string by spaces, will change when using CSV
             String[] newStr = scan.nextLine().split("\\s+");
             for (int i = 0; i < newStr.length; i++) {
                 System.out.println(newStr[i]);
@@ -64,18 +66,31 @@ public class Main extends Application{
             printToData = printToData + "\n";
             //printToData = scan.nextLine().split("\\s+");
             if(Float.parseFloat(newStr[0]) > 0) {
-                rootService.transactionList.add(new Transaction(Float.parseFloat(newStr[0]), newStr[1], LocalDate.parse(newStr[2]),
-                        "", TransactionWeight.EINNAHME,""));
+                if(!(newStr.length < 4)){
+                    rootService.transactionList.add(new Transaction(Float.parseFloat(newStr[0]), newStr[1], LocalDate.parse(newStr[2]),
+                            "", TransactionWeight.EINNAHME,newStr[3], newID));
+                }
+                else{
+                    rootService.transactionList.add(new Transaction(Float.parseFloat(newStr[0]), newStr[1], LocalDate.parse(newStr[2]),
+                            "", TransactionWeight.EINNAHME,"", newID));
+                }
             }
             else {
-                rootService.transactionList.add(new Transaction(Float.parseFloat(newStr[0]), newStr[1], LocalDate.parse(newStr[2]),
-                        "", TransactionWeight.UNWICHTIG,""));
+                if(!(newStr.length < 4)){
+                    rootService.transactionList.add(new Transaction(Float.parseFloat(newStr[0]), newStr[1], LocalDate.parse(newStr[2]),
+                            "", TransactionWeight.UNWICHTIG,newStr[3], newID));
+                }
+                else{
+                    rootService.transactionList.add(new Transaction(Float.parseFloat(newStr[0]), newStr[1], LocalDate.parse(newStr[2]),
+                            "", TransactionWeight.UNWICHTIG,"", newID));
+                }
             }
 
             transactionCount++;
         }
 
         while (scan.hasNext()){
+            newID = rootService.transactionList.transactionIDCounter++ ;
             //Text an Leerzeichen splitten
             String[] newStr = scan.nextLine().split("\\s+");
             for (int i = 0; i < newStr.length; i++) {
@@ -83,17 +98,29 @@ public class Main extends Application{
                 printToData = printToData + newStr[i] + " " ;
             }
             printToData = printToData + "\n";
+            String description = "";
+            //Fall, wenn es eine Beschreibung gibt
+            if(!(newStr.length < 4)){
+
+                for (int i = 3; i < newStr.length; i++) {
+                    description = description + " " + newStr[i];
+                }
+            }
 
             /*
             adapt this part for new Transaction attributes
              */
+
             if(Float.parseFloat(newStr[0]) > 0) {
                 rootService.transactionList.add(new Transaction(Float.parseFloat(newStr[0]), newStr[1], LocalDate.parse(newStr[2]),
-                        "", TransactionWeight.EINNAHME,""));
+                        "", TransactionWeight.EINNAHME,description, newID));
+
+
             }
             else {
                 rootService.transactionList.add(new Transaction(Float.parseFloat(newStr[0]), newStr[1], LocalDate.parse(newStr[2]),
-                        "", TransactionWeight.UNWICHTIG,""));
+                        "", TransactionWeight.UNWICHTIG,description, newID));
+
             }
 
             transactionCount++;
@@ -197,7 +224,11 @@ public class Main extends Application{
 
 
         primaryStage.show();
+        /*
+        In the future, add parameters to addsavingsaccs
+         */
         for(SavingsAccount s : rootService.accountList){
+            System.out.println("New Accccc");
             c.addSavingsAccountPane();
         }
     }

@@ -78,8 +78,8 @@ public class AddTransactionController {
             boxCathegory.setValue(null);
 
 
-            //Beschreibung auslesen
-            String transDescription = txtAreaDescription.getText();
+            //Beschreibung auslesen, Absätze sind aufgrund des Dateiformats aktuell nicht möglich
+            String transDescription = txtAreaDescription.getText().replace(("\n"), " ");
             txtAreaDescription.setText("");
 
             //Datum auslesen
@@ -90,11 +90,14 @@ public class AddTransactionController {
             //
             // Einlesen der Daten in Liste und Datei
             //
-            Transaction t = new Transaction(transSum,transCathegory,transDate,"", TransactionWeight.EINNAHME,transDescription);
+            Transaction t = new Transaction(transSum,transCathegory,transDate,"", TransactionWeight.EINNAHME,transDescription
+                    , Main.rootService.transactionList.transactionIDCounter++);
 
             view.Main.rootService.transactionService.registerTransaction(t);
-
+            String strromg = view.Main.printToData + t.toText() ;
             view.Main.printToData = view.Main.printToData + t.toText() + "\n";
+
+            System.out.println(strromg);
 
             Path p = Path.of(Main.transactionPath);
             try{

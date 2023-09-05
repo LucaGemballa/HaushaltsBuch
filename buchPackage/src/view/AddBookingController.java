@@ -22,7 +22,7 @@ import java.nio.file.*;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 
-public class addSpendingController {
+public class AddBookingController {
 
     //vorläufige Auswahl an Kathegorien:
     public boolean cathHasShown = false;
@@ -32,7 +32,10 @@ public class addSpendingController {
 
 
     @FXML
-    public ChoiceBox<String> boxCathegory;
+    public ChoiceBox<String> boxDestination;
+
+    @FXML
+    public ComboBox<String> boxSource;
 
     @FXML
     private Button btnConfirmAction;
@@ -57,7 +60,7 @@ public class addSpendingController {
     @FXML
     private TextField fldSum;
 
-    public addSpendingController(){
+    public AddBookingController(){
         System.out.println("44");
 
         //boxCathegory.getItems().add(cath1);
@@ -79,8 +82,11 @@ public class addSpendingController {
             fldSum.setText("");
             // Kathegorie der Transaktion auslesen
 
+            /*
             String transCathegory = boxCathegory.getValue();
             boxCathegory.setValue(null);
+
+             */
 
 
             //Beschreibung auslesen
@@ -93,7 +99,7 @@ public class addSpendingController {
             //Teilung der Ausgabe kontrollieren und vornehmen
             //Boolean split = splitSpending.isSelected();
 
-            System.out.println(transSum + " " + transCathegory + " " + transDate + " ");
+            System.out.println(transSum + " " + "Umbuchung" + " " + transDate + " ");
 
             int nrOfTransactions = 1;
             if(splitSpending.isSelected()){
@@ -111,7 +117,7 @@ public class addSpendingController {
                 // up the counter for each split transaction
                 for(int i=0;i<nrOfTransactions;i++){
 
-                    listForTransactions.add(new Transaction(singleTransactionSum,transCathegory,transDate,"", TransactionWeight.UNWICHTIG,""
+                    listForTransactions.add(new Transaction(singleTransactionSum,"Umbuchung",transDate,"", TransactionWeight.BUCHUNG,""
                             , Main.rootService.transactionList.transactionIDCounter++));
                     transDate = transDate.plusMonths(splitRythm);
                 }
@@ -120,7 +126,7 @@ public class addSpendingController {
                 System.out.println("Konvertierung beginnt");
                 transSum = Main.rootService.transactionService.round2(transSum,2);
                 System.out.println("Konvertierung erfolgreich");
-                listForTransactions.add(new Transaction(transSum,transCathegory,transDate,"", TransactionWeight.UNWICHTIG,""
+                listForTransactions.add(new Transaction(transSum,"Umbuchung",transDate,"", TransactionWeight.UNWICHTIG,""
                         , Main.rootService.transactionList.transactionIDCounter++));
             }
 
@@ -175,7 +181,7 @@ public class addSpendingController {
             ListIterator<String> catIterator = Main.categoryList.listIterator(0);
             while (catIterator.hasNext()){
                 String Test = catIterator.next();
-                boxCathegory.getItems().add(Test);
+                boxDestination.getItems().add(Test);
             }
 
             /*

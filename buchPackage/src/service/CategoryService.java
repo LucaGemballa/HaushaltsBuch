@@ -18,12 +18,11 @@ public class CategoryService {
     }
 
 
-
     /*
     initialise range of all dates for correct order
      */
     public void initCategorySeries(CategorySeries catS){
-        Collections.sort(Main.rootService.transactionList.list);
+        Collections.sort(Main.rootService.transactionList.getAllTransactions());
 
         /*
         initialise chart for all dates

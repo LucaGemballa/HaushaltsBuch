@@ -67,6 +67,12 @@ public class MainScreenController {
     @FXML
     private TilePane savingsAccounts;
 
+    @FXML
+    private Button btnAddBooking;
+
+    @FXML
+    private Pane savingsAccountsOverviewPane;
+
     public Boolean notInitialised = true;
 
     final CategoryAxis xAxis = new CategoryAxis();
@@ -108,6 +114,36 @@ public class MainScreenController {
             Pane newLoadedPane =        FXMLLoader.load(getClass().getResource("/view/addSpending.fxml"));
             basePane.getChildren().clear();
             basePane.getChildren().add(newLoadedPane);
+
+
+        } catch (IOException e) {
+            Logger logger = Logger.getLogger(getClass().getName());
+            logger.log(Level.SEVERE, "Failed to create new Window.", e);
+        }
+    }
+
+    @FXML
+    public void addBookingWindow (){
+        try {
+
+            Pane newLoadedPane =        FXMLLoader.load(getClass().getResource("/view/addBooking.fxml"));
+            basePane.getChildren().clear();
+            basePane.getChildren().add(newLoadedPane);
+
+
+        } catch (IOException e) {
+            Logger logger = Logger.getLogger(getClass().getName());
+            logger.log(Level.SEVERE, "Failed to create new Window.", e);
+        }
+    }
+
+    @FXML
+    public void AddSavingsAccountOverview (){
+        try {
+
+            Pane newLoadedPane =        FXMLLoader.load(getClass().getResource("/view/addSpending.fxml"));
+            savingsAccountsOverviewPane.getChildren().clear();
+            savingsAccountsOverviewPane.getChildren().add(newLoadedPane);
 
 
         } catch (IOException e) {
@@ -183,16 +219,23 @@ public class MainScreenController {
     @FXML
     public void addSavingsAccountPane(){
         GridPane g = new GridPane();
+        g.getColumnConstraints().add(new ColumnConstraints(138)); // column 0 is 100 wide
+        g.getColumnConstraints().add(new ColumnConstraints(147)); // column 1 is 200 wide
+        g.getRowConstraints().add(new RowConstraints(57));
+        g.getRowConstraints().add(new RowConstraints(73));
+        g.setStyle("-fx-background-color: #C4C4CC;");
+        g.setGridLinesVisible(true);
         Label l = new Label("Name");
         Label m = new Label("money");
-        Button b = new Button("pressley");
+        Label t = new Label("");
+        Button b = new Button("Button");
         b.setOnMouseClicked(new EventHandler<MouseEvent>() {
                                 @Override public void handle(MouseEvent e) {
-
                                     AddEarningWindow();
                                 }
                             });
-        g.addRow(0,l,b);
+        g.addRow(0,l,m);
+        g.addRow(1,t,b);
         System.out.println("f");
         savingsAccounts.getChildren().add(g);
     }

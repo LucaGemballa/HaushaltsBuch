@@ -7,6 +7,11 @@ public class TransactionList {
     public LinkedList<TransactionList> monthList;
 
     public LinkedList<TransactionList> yearList;
+    /*
+     use the IDCounter to generate individual identification for each transaction
+     IDs will be generated from scratch after the program start!
+     */
+    public int transactionIDCounter ;
 
     public int month;
 
@@ -24,6 +29,7 @@ public class TransactionList {
         freeYear = 0;
         month = 0;
         year = 0;
+        transactionIDCounter = 0;
     }
 
     /*
@@ -77,5 +83,35 @@ public class TransactionList {
             tempListY.monthList.add(tempListM);
             yearList.add(tempListY);
         }
+    }
+    public void delete(Transaction t){
+        int transMonth = t.getTransactionDate().getMonthValue();
+        int transYear = t.getTransactionDate().getYear();
+
+        for (TransactionList yL : yearList){
+
+            if (yL.year == transYear) {
+
+                for (TransactionList mL : yL.monthList){
+                    if (mL.month == transMonth){
+                        mL.list.remove(t);
+                    }
+                }
+            }
+        }
+    }
+
+    /*
+    Use this function to get a single list (not ordered I assume) of all transactions
+     */
+    public LinkedList<Transaction> getAllTransactions(){
+        LinkedList<Transaction> returnList = new LinkedList<Transaction>();
+
+        for (TransactionList yL : yearList){
+            for (TransactionList mL : yL.monthList){
+                returnList.addAll(mL.list);
+            }
+        }
+        return returnList;
     }
 }
