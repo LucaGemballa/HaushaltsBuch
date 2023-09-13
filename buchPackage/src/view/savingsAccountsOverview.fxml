@@ -1,8 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.SavingsAccountsOverviewController">
-
+<AnchorPane prefHeight="809.0" prefWidth="1193.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.SavingsAccountsOverviewController">
+   <children>
+      <Label fx:id="accountNameLabel" layoutX="537.0" layoutY="21.0" prefHeight="37.0" prefWidth="119.0" text="Label" />
+      <Label layoutX="53.0" layoutY="104.0" prefHeight="30.0" prefWidth="59.0" text="Balance: " />
+      <Label fx:id="accountBalanceLabel" layoutX="112.0" layoutY="104.0" prefHeight="30.0" prefWidth="95.0" text="Label" />
+      <TableView fx:id="tableViewTransactions" layoutX="656.0" layoutY="134.0" prefHeight="258.0" prefWidth="475.0">
+        <columns>
+          <TableColumn fx:id="tableColumnTransactionSum" prefWidth="98.0" text="Summe" />
+          <TableColumn fx:id="tableColumnSource" prefWidth="105.0" text="Ziel/Quelle" />
+            <TableColumn fx:id="tableColumnTransactionDate" prefWidth="82.0" text="Datum" />
+        </columns>
+      </TableView>
+      <Button fx:id="deleteAccountButton" layoutX="1013.0" layoutY="27.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="135.0" text="Account löschen" />
+   </children>
 </AnchorPane>

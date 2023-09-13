@@ -55,6 +55,7 @@ public class TransactionHistoryController {
 
     @FXML
     public void initialize(){
+
         tableViewTransactions.getItems().addAll(Main.rootService.transactionList.getAllTransactions());
         tableColumnCategory.setCellValueFactory(c-> new SimpleStringProperty(c.getValue().getTransactionCategory()));
         tableColumnTransactionSum.setCellValueFactory(c-> new SimpleStringProperty(c.getValue().getTransactionSumString()));

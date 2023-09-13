@@ -90,7 +90,7 @@ public class AddTransactionController {
             //
             // Einlesen der Daten in Liste und Datei
             //
-            Transaction t = new Transaction(transSum,transCathegory,transDate,"", TransactionWeight.EINNAHME,transDescription
+            Transaction t = new Transaction(transSum,transCathegory,transDate,"Einnahme","Hauptkonto", TransactionWeight.EINNAHME,transDescription
                     , Main.rootService.transactionList.transactionIDCounter++);
 
             view.Main.rootService.transactionService.registerTransaction(t);

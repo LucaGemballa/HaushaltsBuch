@@ -40,7 +40,7 @@
                 <Text layoutX="14.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Summe :" />
                 <Text layoutX="14.0" layoutY="96.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Datum : " />
                 <Text layoutX="16.0" layoutY="188.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quelle :" />
-                <ComboBox layoutX="87.0" layoutY="171.0" prefHeight="25.0" prefWidth="174.0" />
+                <ComboBox fx:id="spendingSource" layoutX="87.0" layoutY="171.0" onMouseClicked="#revealAccounts" prefHeight="25.0" prefWidth="174.0" />
                 <AnchorPane layoutX="29.0" layoutY="211.0" prefHeight="76.0" prefWidth="264.0" style="-fx-background-color: F0F0F8;">
                     <children>
                         <CheckBox layoutX="14.0" layoutY="13.0" mnemonicParsing="false" text="wichtig" />
@@ -59,7 +59,7 @@
         </AnchorPane>
         <AnchorPane layoutX="29.0" layoutY="401.0" prefHeight="221.0" prefWidth="322.0" style="-fx-background-color: C4C4CC;">
             <children>
-                <TextArea fx:id="fieldSum" layoutX="14.0" layoutY="28.0" prefHeight="174.0" prefWidth="294.0" />
+                <TextArea fx:id="descriptionArea" layoutX="14.0" layoutY="28.0" prefHeight="174.0" prefWidth="294.0" />
                 <Text layoutX="14.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Beschreibung:" />
             </children>
         </AnchorPane>

@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="672.0" minWidth="700.0" prefHeight="672.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.addSpendingController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="672.0" minWidth="700.0" prefHeight="672.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.AddBookingController">
     <children>
         <AnchorPane fx:id="anchor1" layoutX="29.0" layoutY="22.0" onMouseEntered="#revealCathegories" prefHeight="337.0" prefWidth="322.0" style="-fx-background-color: C4C4CC;">
             <children>
@@ -19,7 +19,7 @@
                 <Text layoutX="14.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Summe :" />
                 <Text layoutX="14.0" layoutY="96.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Datum : " />
                 <Text layoutX="16.0" layoutY="188.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quelle :" />
-                <ComboBox layoutX="87.0" layoutY="171.0" prefHeight="25.0" prefWidth="174.0" />
+                <ComboBox fx:id="boxSource" layoutX="87.0" layoutY="171.0" onMouseClicked="#revealAccounts" prefHeight="25.0" prefWidth="174.0" />
                 <AnchorPane layoutX="29.0" layoutY="211.0" prefHeight="76.0" prefWidth="264.0" style="-fx-background-color: F0F0F8;">
                     <children>
                         <CheckBox layoutX="14.0" layoutY="13.0" mnemonicParsing="false" text="wichtig" />
@@ -27,7 +27,7 @@
                         <CheckBox layoutX="139.0" layoutY="13.0" mnemonicParsing="false" text="unwichtig" />
                     </children>
                 </AnchorPane>
-                <ChoiceBox fx:id="boxDestination" layoutX="87.0" layoutY="127.0" onMouseClicked="#revealCathegories" prefHeight="25.0" prefWidth="174.0">
+                <ChoiceBox fx:id="boxDestination" layoutX="87.0" layoutY="127.0" onMouseClicked="#revealAccounts" prefHeight="25.0" prefWidth="174.0">
 
                     <tooltip>
                         <Tooltip text="hallo oger" />

@@ -66,26 +66,25 @@ public class Main extends Application{
             printToData = printToData + "\n";
             //printToData = scan.nextLine().split("\\s+");
             if(Float.parseFloat(newStr[0]) > 0) {
-                if(!(newStr.length < 4)){
+                if(!(newStr.length < 6)){
                     rootService.transactionList.add(new Transaction(Float.parseFloat(newStr[0]), newStr[1], LocalDate.parse(newStr[2]),
-                            "", TransactionWeight.EINNAHME,newStr[3], newID));
+                            newStr[3],newStr[4], TransactionWeight.EINNAHME,newStr[5], newID));
                 }
                 else{
                     rootService.transactionList.add(new Transaction(Float.parseFloat(newStr[0]), newStr[1], LocalDate.parse(newStr[2]),
-                            "", TransactionWeight.EINNAHME,"", newID));
+                            newStr[3],newStr[4], TransactionWeight.EINNAHME,"", newID));
                 }
             }
             else {
-                if(!(newStr.length < 4)){
+                if(!(newStr.length < 6)){
                     rootService.transactionList.add(new Transaction(Float.parseFloat(newStr[0]), newStr[1], LocalDate.parse(newStr[2]),
-                            "", TransactionWeight.UNWICHTIG,newStr[3], newID));
+                            newStr[3],newStr[4], TransactionWeight.UNWICHTIG,newStr[5], newID));
                 }
                 else{
                     rootService.transactionList.add(new Transaction(Float.parseFloat(newStr[0]), newStr[1], LocalDate.parse(newStr[2]),
-                            "", TransactionWeight.UNWICHTIG,"", newID));
+                            newStr[3],newStr[4], TransactionWeight.UNWICHTIG,"", newID));
                 }
             }
-
             transactionCount++;
         }
 
@@ -100,9 +99,9 @@ public class Main extends Application{
             printToData = printToData + "\n";
             String description = "";
             //Fall, wenn es eine Beschreibung gibt
-            if(!(newStr.length < 4)){
+            if(!(newStr.length < 6)){
 
-                for (int i = 3; i < newStr.length; i++) {
+                for (int i = 5; i < newStr.length; i++) {
                     description = description + " " + newStr[i];
                 }
             }
@@ -113,14 +112,13 @@ public class Main extends Application{
 
             if(Float.parseFloat(newStr[0]) > 0) {
                 rootService.transactionList.add(new Transaction(Float.parseFloat(newStr[0]), newStr[1], LocalDate.parse(newStr[2]),
-                        "", TransactionWeight.EINNAHME,description, newID));
+                        newStr[3],newStr[4], TransactionWeight.EINNAHME,description, newID));
 
 
             }
             else {
                 rootService.transactionList.add(new Transaction(Float.parseFloat(newStr[0]), newStr[1], LocalDate.parse(newStr[2]),
-                        "", TransactionWeight.UNWICHTIG,description, newID));
-
+                        newStr[3],newStr[4], TransactionWeight.UNWICHTIG,description, newID));
             }
 
             transactionCount++;
@@ -129,7 +127,7 @@ public class Main extends Application{
         //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-        // Einlesen alter Kathegorien
+        // Einlesen alter Kategorien
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         Scanner scanCathegories = null;
         try{
@@ -173,7 +171,7 @@ public class Main extends Application{
         }
         catch (Exception e){
         }
-
+        int numberOfAccounts = 0;
         if(scanAccounts.hasNext()){
             String[] newStr3 = scanAccounts.nextLine().split("\\s+");
             for (int i = 0; i < newStr3.length; i++) {
@@ -182,7 +180,8 @@ public class Main extends Application{
             }
             printToDataAccs = printToDataAccs + "\n";
 
-            rootService.accountList.add(new SavingsAccount(newStr3[0], Float.parseFloat(newStr3[1])));
+            rootService.accountList.add(new SavingsAccount(newStr3[0], Float.parseFloat(newStr3[1]), rootService.savingsAccountService.numberOfAccounts++));
+
         }
 
         while (scanAccounts.hasNext()){
@@ -194,7 +193,7 @@ public class Main extends Application{
             }
             printToDataAccs = printToDataAccs + "\n";
 
-            rootService.accountList.add(new SavingsAccount(newStr3[0], Float.parseFloat(newStr3[1])));
+            rootService.accountList.add(new SavingsAccount(newStr3[0], Float.parseFloat(newStr3[1]), rootService.savingsAccountService.numberOfAccounts++));
         }
 
         //--------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -229,8 +228,11 @@ public class Main extends Application{
          */
         for(SavingsAccount s : rootService.accountList){
             System.out.println("New Accccc");
-            c.addSavingsAccountPane();
+            c.addSavingsAccountPane(s);
         }
+
+        //Add button for creating another savings account
+        c.addAccountAdder();
     }
 
     public static void main (String args[]){

@@ -2,6 +2,7 @@ package view;
 
 import java.lang.*;
 
+import entity.SavingsAccount;
 import entity.Transaction;
 import entity.TransactionWeight;
 import javafx.fxml.FXML;
@@ -25,7 +26,7 @@ import java.text.DecimalFormat;
 public class AddBookingController {
 
     //vorläufige Auswahl an Kathegorien:
-    public boolean cathHasShown = false;
+    private boolean accHasShown = false;
     private String cath1= "Unterhalt";
     private String cath2= "Taschengeld";
     private String cath3= "Dividende";
@@ -77,16 +78,17 @@ public class AddBookingController {
             //LinkedList<moneyAction> list1 = new LinkedList<moneyAction>();
 
             //zugefügte Summe auslesen
-            Float transSum = Float.parseFloat(fldSum.getText()) * (-1);
+            Float transSum = Float.parseFloat(fldSum.getText()) ;
             System.out.println(transSum);
             fldSum.setText("");
             // Kathegorie der Transaktion auslesen
 
-            /*
-            String transCathegory = boxCathegory.getValue();
-            boxCathegory.setValue(null);
 
-             */
+            String transSource = boxSource.getValue();
+            boxSource.setValue(null);
+
+            String transDestination = boxDestination.getValue();
+            boxDestination.setValue(null);
 
 
             //Beschreibung auslesen
@@ -102,6 +104,7 @@ public class AddBookingController {
             System.out.println(transSum + " " + "Umbuchung" + " " + transDate + " ");
 
             int nrOfTransactions = 1;
+            /*
             if(splitSpending.isSelected()){
                 int splitForXMonths = Integer.parseInt(monthsToSplit.getCharacters().toString());
                 int splitRythm = Integer.parseInt(monthsToSplitRythm.getCharacters().toString());
@@ -117,18 +120,20 @@ public class AddBookingController {
                 // up the counter for each split transaction
                 for(int i=0;i<nrOfTransactions;i++){
 
-                    listForTransactions.add(new Transaction(singleTransactionSum,"Umbuchung",transDate,"", TransactionWeight.BUCHUNG,""
+                    listForTransactions.add(new Transaction(singleTransactionSum,"Umbuchung",transDate,transSource,transDestination, TransactionWeight.BUCHUNG,""
                             , Main.rootService.transactionList.transactionIDCounter++));
                     transDate = transDate.plusMonths(splitRythm);
                 }
             }
             else{
-                System.out.println("Konvertierung beginnt");
-                transSum = Main.rootService.transactionService.round2(transSum,2);
-                System.out.println("Konvertierung erfolgreich");
-                listForTransactions.add(new Transaction(transSum,"Umbuchung",transDate,"", TransactionWeight.UNWICHTIG,""
-                        , Main.rootService.transactionList.transactionIDCounter++));
-            }
+
+             */
+            System.out.println("Konvertierung beginnt");
+            transSum = Main.rootService.transactionService.round2(transSum,2);
+            System.out.println("Konvertierung erfolgreich");
+            listForTransactions.add(new Transaction(transSum,"Umbuchung",transDate,transSource,transDestination, TransactionWeight.BUCHUNG,""
+                    , Main.rootService.transactionList.transactionIDCounter++));
+
 
 
             //
@@ -156,7 +161,9 @@ public class AddBookingController {
             }
 
             //Aktualisieren des Kontostands
-            Main.rootService.accountList.getFirst().bookTransaction(transSum);
+            Main.rootService.accountList.get(Main.rootService.savingsAccountService.getAccountID(transSource)).bookTransaction(-transSum);
+            Main.rootService.accountList.get(Main.rootService.savingsAccountService.getAccountID(transDestination)).bookTransaction(transSum);
+            //Main.rootService.accountList.getFirst().bookTransaction(transSum);
 
             Path c = Path.of(Main.accountPath);
             try{
@@ -173,27 +180,20 @@ public class AddBookingController {
     }
 
     @FXML
-    public void revealCathegories(){
+    public void revealAccounts(){
         System.out.println("1");
-        System.out.println(cathHasShown);
-        if(cathHasShown == false){
+        System.out.println(accHasShown);
+        if(accHasShown == false){
             System.out.println("1");
-            ListIterator<String> catIterator = Main.categoryList.listIterator(0);
-            while (catIterator.hasNext()){
-                String Test = catIterator.next();
-                boxDestination.getItems().add(Test);
+            ListIterator<SavingsAccount> accountIterator = Main.rootService.accountList.listIterator(0);
+            while (accountIterator.hasNext()){
+                SavingsAccount x = accountIterator.next();
+                boxDestination.getItems().add(x.name);
+                boxSource.getItems().add(x.name);
             }
-
-            /*
-            boxCathegory.getItems().add(cath1);
-            boxCathegory.getItems().add(cath2);
-            boxCathegory.getItems().add(cath3);
-
-             */
-            cathHasShown= true;
+            accHasShown= true;
         }
         System.out.println("2");
-
     }
 
 }

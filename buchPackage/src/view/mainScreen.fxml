@@ -38,7 +38,7 @@
                             </rowConstraints>
                             <children>
                                 <Button fx:id="btnAddEarning" mnemonicParsing="false" onMouseClicked="#AddEarningWindow" prefHeight="66.0" prefWidth="234.0" text="Einnahme hinzufügen" />
-                                <Button mnemonicParsing="false" prefHeight="66.0" prefWidth="234.0" text="Spartopf einrichten" GridPane.rowIndex="2" />
+                                <Button fx:id="addAccountBtn" mnemonicParsing="false" onMouseClicked="#addSavingsAccountsMainPage" prefHeight="66.0" prefWidth="234.0" text="Spartopf einrichten" GridPane.rowIndex="2" />
                                 <Button mnemonicParsing="false" prefHeight="66.0" prefWidth="234.0" text="automatische Transaktion einrichten" GridPane.rowIndex="3" />
                                 <Button fx:id="editCathegories" mnemonicParsing="false" onMouseClicked="#AddCathegoriesWindow" prefHeight="66.0" prefWidth="235.0" text="Kategorien" GridPane.rowIndex="4" />
                         <Button fx:id="btnAddSpending" mnemonicParsing="false" onMouseClicked="#AddSpendingWindow" prefHeight="66.0" prefWidth="234.0" text="Ausgabe hinzufügen" GridPane.rowIndex="1" />
@@ -101,58 +101,22 @@
                     </children></AnchorPane>
             </content>
         </Tab>
-      <Tab text="Spartöpfe">
+      <Tab closable="false" text="Spartöpfe">
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <ScrollPane fx:id="savingsScrollPane" layoutX="77.0" layoutY="137.0" prefHeight="572.0" prefWidth="321.0">
-                    <content>
-                      <AnchorPane fx:id="savingsAccountsPane" minHeight="0.0" minWidth="0.0" prefHeight="642.0" prefWidth="310.0">
-                           <children>
-                              <TilePane fx:id="savingsAccounts" layoutX="7.0" prefHeight="642.0" prefTileHeight="130.0" prefTileWidth="295.0" prefWidth="310.0" vgap="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                 <children>
-                                    <GridPane gridLinesVisible="true" prefHeight="130.0" prefWidth="204.0" style="-fx-background-color: C4C4CC;">
-                                      <columnConstraints>
-                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="154.0" minWidth="10.0" prefWidth="123.0" />
-                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="180.0" minWidth="10.0" prefWidth="137.0" />
-                                      </columnConstraints>
-                                      <rowConstraints>
-                                        <RowConstraints maxHeight="125.0" minHeight="10.0" prefHeight="57.0" vgrow="SOMETIMES" />
-                                        <RowConstraints maxHeight="130.0" minHeight="10.0" prefHeight="73.0" vgrow="SOMETIMES" />
-                                      </rowConstraints>
-                                       <children>
-                                          <Label prefHeight="43.0" prefWidth="147.0" text="Name" />
-                                          <Label text="Geldstand" GridPane.columnIndex="1" />
-                                          <Button mnemonicParsing="false" text="Button" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                       </children>
-                                    </GridPane>
-                                    <GridPane gridLinesVisible="true" prefHeight="130.0" prefWidth="204.0" style="-fx-background-color: C4C4CC;">
-                                       <children>
-                                          <Label prefHeight="43.0" prefWidth="147.0" text="Name" />
-                                          <Label text="Geldstand" GridPane.columnIndex="1" />
-                                          <Button mnemonicParsing="false" text="Button" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                       </children>
-                                       <columnConstraints>
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="154.0" minWidth="10.0" prefWidth="123.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="180.0" minWidth="10.0" prefWidth="137.0" />
-                                       </columnConstraints>
-                                       <rowConstraints>
-                                          <RowConstraints maxHeight="125.0" minHeight="10.0" prefHeight="57.0" vgrow="SOMETIMES" />
-                                          <RowConstraints maxHeight="130.0" minHeight="10.0" prefHeight="73.0" vgrow="SOMETIMES" />
-                                       </rowConstraints>
-                                    </GridPane>
-                                 </children>
-                                 <padding>
-                                    <Insets bottom="5.0" left="5.0" right="20.0" top="5.0" />
-                                 </padding>
-                              </TilePane>
-                           </children>
-                        </AnchorPane>
-                    </content>
+                  <ScrollPane fx:id="savingsScrollPane" hbarPolicy="NEVER" layoutX="77.0" layoutY="137.0" prefHeight="572.0" prefWidth="321.0" vbarPolicy="ALWAYS">
+                     <content>
+                        <TilePane fx:id="savingsAccounts" prefHeight="808.0" prefTileHeight="130.0" prefTileWidth="295.0" prefWidth="310.0" vgap="10.0">
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="20.0" top="5.0" />
+                           </padding>
+                        </TilePane>
+                     </content>
                   </ScrollPane>
                   <AnchorPane layoutX="437.0" layoutY="137.0" prefHeight="811.0" prefWidth="1219.0">
                      <children>
-                        <Pane prefHeight="811.0" prefWidth="1221.0" />
+                        <Pane fx:id="savingsAccountsOverviewPane" prefHeight="811.0" prefWidth="1221.0" />
                      </children>
                   </AnchorPane>
                </children>

@@ -2,6 +2,7 @@ package view;
 
 import java.lang.*;
 
+import entity.SavingsAccount;
 import entity.Transaction;
 import entity.TransactionWeight;
 import javafx.fxml.FXML;
@@ -26,6 +27,8 @@ public class addSpendingController {
 
     //vorläufige Auswahl an Kathegorien:
     public boolean cathHasShown = false;
+
+    private boolean accHasShown = false;
     private String cath1= "Unterhalt";
     private String cath2= "Taschengeld";
     private String cath3= "Dividende";
@@ -52,6 +55,12 @@ public class addSpendingController {
     @FXML
     private DatePicker dateInput;
 
+    @FXML
+    private ComboBox<String> spendingSource;
+
+    @FXML
+    private TextArea descriptionArea;
+
 
 
     @FXML
@@ -77,16 +86,19 @@ public class addSpendingController {
             Float transSum = Float.parseFloat(fldSum.getText()) * (-1);
             System.out.println(transSum);
             fldSum.setText("");
-            // Kathegorie der Transaktion auslesen
-
+            // Kategorie der Transaktion auslesen
             String transCathegory = boxCathegory.getValue();
             boxCathegory.setValue(null);
 
+            //Quelle auslesen
+            String transSource = spendingSource.getValue();
+            spendingSource.setValue(null);
 
             //Beschreibung auslesen
+            String transDescription = descriptionArea.getText().replace(("\n"), " ");
+            descriptionArea.clear();
 
             //Datum auslesen
-
             LocalDate transDate = dateInput.getValue();
             dateInput.setValue(null);
 
@@ -111,7 +123,7 @@ public class addSpendingController {
                 // up the counter for each split transaction
                 for(int i=0;i<nrOfTransactions;i++){
 
-                    listForTransactions.add(new Transaction(singleTransactionSum,transCathegory,transDate,"", TransactionWeight.UNWICHTIG,""
+                    listForTransactions.add(new Transaction(singleTransactionSum,transCathegory,transDate,transSource,"Ausgabe", TransactionWeight.UNWICHTIG,transDescription
                             , Main.rootService.transactionList.transactionIDCounter++));
                     transDate = transDate.plusMonths(splitRythm);
                 }
@@ -120,7 +132,7 @@ public class addSpendingController {
                 System.out.println("Konvertierung beginnt");
                 transSum = Main.rootService.transactionService.round2(transSum,2);
                 System.out.println("Konvertierung erfolgreich");
-                listForTransactions.add(new Transaction(transSum,transCathegory,transDate,"", TransactionWeight.UNWICHTIG,""
+                listForTransactions.add(new Transaction(transSum,transCathegory,transDate,transSource,"Ausgabe", TransactionWeight.UNWICHTIG,transDescription
                         , Main.rootService.transactionList.transactionIDCounter++));
             }
 
@@ -177,17 +189,26 @@ public class addSpendingController {
                 String Test = catIterator.next();
                 boxCathegory.getItems().add(Test);
             }
-
-            /*
-            boxCathegory.getItems().add(cath1);
-            boxCathegory.getItems().add(cath2);
-            boxCathegory.getItems().add(cath3);
-
-             */
             cathHasShown= true;
         }
         System.out.println("2");
 
+    }
+
+    @FXML
+    public void revealAccounts(){
+        System.out.println("1");
+        System.out.println(accHasShown);
+        if(accHasShown == false){
+            System.out.println("1");
+            ListIterator<SavingsAccount> accountIterator = Main.rootService.accountList.listIterator(0);
+            while (accountIterator.hasNext()){
+                SavingsAccount x = accountIterator.next();
+                spendingSource.getItems().add(x.name);
+            }
+            accHasShown= true;
+        }
+        System.out.println("2");
     }
 
 }

@@ -9,16 +9,18 @@ public class Transaction implements Comparable<Transaction>{
     String transactionDescription;
     LocalDate transactionDate;
     String transactionSource;
+    String transactionDestination;
     TransactionWeight transactionWeight;
     int transactionID;
 
 
-    public Transaction (float sum, String category,LocalDate date,String source,TransactionWeight weight, String description, int id){
+    public Transaction (float sum, String category,LocalDate date,String source, String destination, TransactionWeight weight, String description, int id){
         transactionSum = sum;
         transactionCategory = category;
         transactionDescription = description;
         transactionDate = date;
         transactionSource = source;
+        transactionDestination = destination;
         transactionWeight = weight;
         transactionID = id;
     }
@@ -41,7 +43,7 @@ public class Transaction implements Comparable<Transaction>{
 
          */
 
-        String retVal = tSum + " " + transactionCategory + " " + transactionDate + " " + transactionDescription;
+        String retVal = tSum + " " + transactionCategory + " " + transactionDate + " " + transactionSource + " "+ transactionDestination + " " + transactionDescription;
         return retVal;
     }
 
@@ -81,6 +83,10 @@ public class Transaction implements Comparable<Transaction>{
     public LocalDate getTransactionDate(){return transactionDate; }
 
     public int getTransactionID(){return transactionID; }
+
+    public void setTransactionSource(String s){
+        transactionSource = s;
+    }
 
     @Override
     public int compareTo(Transaction o){

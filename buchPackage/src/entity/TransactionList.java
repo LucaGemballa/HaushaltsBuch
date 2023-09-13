@@ -1,5 +1,7 @@
 package entity;
 
+import view.Main;
+
 import java.util.LinkedList;
 public class TransactionList {
     public LinkedList<Transaction> list;
@@ -88,6 +90,17 @@ public class TransactionList {
         int transMonth = t.getTransactionDate().getMonthValue();
         int transYear = t.getTransactionDate().getYear();
 
+        String transSource = t.transactionSource;
+        String transDestination = t.transactionDestination;
+
+        if(!transSource.equals("Einnahme")){
+            Main.rootService.accountList.get(Main.rootService.savingsAccountService.getAccountID(transSource)).bookTransaction(t.transactionSum);
+        }
+        if(!transDestination.equals("Ausgabe")){
+            Main.rootService.accountList.get(Main.rootService.savingsAccountService.getAccountID(transDestination)).bookTransaction(- t.transactionSum);
+        }
+
+
         for (TransactionList yL : yearList){
 
             if (yL.year == transYear) {
@@ -99,6 +112,7 @@ public class TransactionList {
                 }
             }
         }
+
     }
 
     /*
@@ -113,5 +127,18 @@ public class TransactionList {
             }
         }
         return returnList;
+    }
+
+
+    public String getTransactionString(){
+        String transactionString = "";
+        for (TransactionList yL : yearList){
+            for (TransactionList mL : yL.monthList){
+                for (Transaction t: mL.list){
+                    transactionString = transactionString + t.toText() + "\n";
+                }
+            }
+        }
+        return transactionString;
     }
 }
