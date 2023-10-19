@@ -89,7 +89,6 @@ public class TransactionList {
     public void delete(Transaction t){
         int transMonth = t.getTransactionDate().getMonthValue();
         int transYear = t.getTransactionDate().getYear();
-
         String transSource = t.transactionSource;
         String transDestination = t.transactionDestination;
 
@@ -112,7 +111,7 @@ public class TransactionList {
                 }
             }
         }
-
+        System.out.println("Transaktion gelöscht");
     }
 
     /*

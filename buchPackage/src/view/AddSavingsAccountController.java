@@ -23,6 +23,9 @@ public class AddSavingsAccountController {
         SavingsAccount newAcc = new SavingsAccount(accountName,0.0f,Main.rootService.savingsAccountService.numberOfAccounts++);
         Main.rootService.accountList.add(newAcc);
 
+        Main.rootService.savingsAccountService.getMainController().savingsAccountsTilePane.getChildren().clear();
+        Main.rootService.savingsAccountService.getMainController().refreshMainTab();
+
         Path c = Path.of(Main.accountPath);
         try{
             Path filePath = Files.writeString(c, Main.rootService.savingsAccountService.accountListToText());

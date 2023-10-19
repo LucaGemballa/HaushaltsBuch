@@ -205,7 +205,8 @@ public class Main extends Application{
 
         MainScreenController c = loader.getController();
 
-        c.refreshMainTab();
+        //c.refreshMainTab();
+        rootService.savingsAccountService.setMainController(c);
 
 
         primaryStage.setTitle("Haushaltsbuch Assistent");

@@ -2,9 +2,6 @@ package view;
 
 import entity.CategorySeries;
 import entity.SavingsAccount;
-import javafx.beans.InvalidationListener;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.chart.StackedBarChart;
 import javafx.scene.control.Button;
@@ -21,7 +18,6 @@ import javafx.event.*;
 import  javafx.scene.input.MouseEvent;
 
 //import java.awt.event.MouseEvent;
-import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 //imports for IOException
@@ -71,7 +67,7 @@ public class MainScreenController {
     private AnchorPane savingsAccountsPane;
 
     @FXML
-    private TilePane savingsAccounts;
+    public TilePane savingsAccountsTilePane;
 
     @FXML
     private Button btnAddBooking;
@@ -131,6 +127,11 @@ public class MainScreenController {
             Logger logger = Logger.getLogger(getClass().getName());
             logger.log(Level.SEVERE, "Failed to create new Window.", e);
         }
+    }
+
+    @FXML
+    public void addAccountDeletionPrompt(){
+
     }
 
     @FXML
@@ -247,6 +248,12 @@ public class MainScreenController {
 
     @FXML
     public void refreshMainTab(){
+        for(SavingsAccount s : Main.rootService.accountList){
+            System.out.println("New Accccc");
+            addSavingsAccountPane(s);
+        }
+        addAccountAdder();
+
         /*
         mainAccountBalance.setText(Main.rootService.accountList.getFirst().getBalanceString());
         currentMonthBalance.setText(Main.rootService.transactionService.calculateMonthlyBalanceString(LocalDate.now()));
@@ -256,6 +263,7 @@ public class MainScreenController {
 
     @FXML
     public void addSavingsAccountPane(SavingsAccount n){
+        System.out.println(n.name + " neuer Account");
         GridPane g = new GridPane();
         g.getColumnConstraints().add(new ColumnConstraints(140)); // column 0 is 100 wide
         g.getColumnConstraints().add(new ColumnConstraints(155)); // column 1 is 200 wide
@@ -263,8 +271,11 @@ public class MainScreenController {
         g.getRowConstraints().add(new RowConstraints(73));
         g.setStyle("-fx-background-color: #C4C4CC;");
         g.setGridLinesVisible(true);
+        g.setAccessibleText(n.name);
         Label l = new Label(n.name);
         Label m = new Label(n.getBalanceString());
+        m.textProperty().bind(n.balanceObserve);
+        n.balanceObserve.setValue(n.getBalanceString());
         Label t = new Label("");
         Button b = new Button("Ansicht");
         b.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -275,7 +286,7 @@ public class MainScreenController {
         g.addRow(0,l,m);
         g.addRow(1,t,b);
         System.out.println("f");
-        savingsAccounts.getChildren().add(g);
+        savingsAccountsTilePane.getChildren().add(g);
         savingsScrollPane.setFitToHeight(true);
     }
 
@@ -289,7 +300,7 @@ public class MainScreenController {
             }
         });
 
-        savingsAccounts.getChildren().add(b);
+        savingsAccountsTilePane.getChildren().add(b);
         savingsScrollPane.setFitToHeight(true);
     }
 

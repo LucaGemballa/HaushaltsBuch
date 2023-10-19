@@ -107,7 +107,7 @@
                <children>
                   <ScrollPane fx:id="savingsScrollPane" hbarPolicy="NEVER" layoutX="77.0" layoutY="137.0" prefHeight="572.0" prefWidth="321.0" vbarPolicy="ALWAYS">
                      <content>
-                        <TilePane fx:id="savingsAccounts" prefHeight="808.0" prefTileHeight="130.0" prefTileWidth="295.0" prefWidth="310.0" vgap="10.0">
+                        <TilePane fx:id="savingsAccountsTilePane" prefHeight="808.0" prefTileHeight="130.0" prefTileWidth="295.0" prefWidth="310.0" vgap="10.0">
                            <padding>
                               <Insets bottom="5.0" left="5.0" right="20.0" top="5.0" />
                            </padding>
